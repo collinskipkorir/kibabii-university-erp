@@ -1,0 +1,21 @@
+<odoo>
+
+    <!-- University Administrator -->
+    <record id="group_university_admin" model="res.groups">
+        <field name="name">University Administrator</field>
+    </record>
+
+    <!-- University Officer -->
+    <record id="group_university_officer" model="res.groups">
+        <field name="name">University Officer</field>
+    </record>
+
+    <!-- University User -->
+    <record id="group_university_user" model="res.groups">
+        <field name="name">University User</field>
+    </record>
+
+
+
+</odoo>
+

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- List View -->
+    <record id="view_university_management_list" model="ir.ui.view">
+        <field name="name">university.management.list</field>
+        <field name="model">university.management</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="location"/>
+                <field name="email"/>
+                <field name="phone_number"/>
+                <field name="student_ids"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_university_management_form" model="ir.ui.view">
+        <field name="name">university.management.form</field>
+        <field name="model">university.management</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="location"/>
+                        </group>
+                        <group>
+                            <field name="email"/>
+                            <field name="phone_number"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="student_ids"/>
+                    </group>
+                    <group>
+                        <notebook>
+                            <page string="Departments">
+                                <field name="department_ids">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="department_type"/>
+                                    </tree>
+                                </field>
+                            </page>
+
+                            <page string="Students">
+                                <field name="student_ids">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="registration_number"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- Action -->
+    <record id="action_university_management" model="ir.actions.act_window">
+        <field name="name">University Management</field>
+        <field name="res_model">university.management</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>
