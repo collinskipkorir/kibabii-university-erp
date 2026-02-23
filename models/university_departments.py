@@ -4,6 +4,7 @@ from odoo import fields, models
 class UniversityDepartment(models.Model):
     _name = 'university.department'
     _description = 'University Department'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(string="Department Name", required=True)
 

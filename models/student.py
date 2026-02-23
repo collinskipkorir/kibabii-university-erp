@@ -4,6 +4,7 @@ from odoo import api, fields, models
 class UniversityStudent(models.Model):
     _name = 'student.university'
     _description = 'University Student'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     #fields
     name = fields.Char(required=True , string="Student Name")
@@ -66,5 +67,6 @@ class UniversityStudent(models.Model):
             student.total_points = total_points
             student.total_credits = total_credits
             student.gpa = total_points / total_credits if total_credits else 0
+
 
 
