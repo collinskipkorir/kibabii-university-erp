@@ -1,5 +1,6 @@
 from odoo import fields, models
 
+
 class UniversityDepartment(models.Model):
     _name = 'university.department'
     _description = 'University Department'
@@ -13,12 +14,6 @@ class UniversityDepartment(models.Model):
             ('academic', 'Academic / Lecturers'),
         ],
         string="Department Type",
-        required=True
-    )
-    department_id= fields.Many2one(
-        comodel_name='university.department',
-        string="University",
-        ondelete='cascade',
         required=True
     )
 

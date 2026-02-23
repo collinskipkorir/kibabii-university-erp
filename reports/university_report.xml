@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Report Action -->
+    <report
+        id="action_university_full_report"
+        model="university.management"
+        string="University Management Report"
+        report_type="qweb-pdf"
+        name="your_module.university_full_report_template"
+        file="your_module.university_full_report_template"
+        print_report_name="'University Report - %s' % (object.name)"
+    />
+
+    <template id="university_full_report_template">
+        <t t-call="web.external_layout">
+            <div class="page">
+
+                <!-- HEADER -->
+                <div style="text-align:center;">
+                    <img t-if="doc.logo"
+                         t-att-src="'data:image/png;base64,%s' % doc.logo"
+                         style="max-height:100px;"/>
+                    <h2 t-esc="doc.name"/>
+                    <p>
+                        <span t-esc="doc.location"/> |
+                        <span t-esc="doc.email"/> |
+                        <span t-esc="doc.phone_number"/>
+                    </p>
+                </div>
+
+                <hr/>
+
+                <!-- SUMMARY SECTION -->
+                <h3>University Summary</h3>
+
+                <t t-set="total_students" t-value="len(doc.student_ids)"/>
+                <t t-set="avg_gpa"
+                   t-value="sum(doc.student_ids.mapped('gpa')) / total_students if total_students else 0"/>
+                <t t-set="total_fees"
+                   t-value="sum(doc.student_ids.mapped('total_fee'))"/>
+                <t t-set="total_paid"
+                   t-value="sum(doc.student_ids.mapped('total_paid'))"/>
+                <t t-set="total_balance"
+                   t-value="sum(doc.student_ids.mapped('fee_balance'))"/>
+
+                <table class="table table-sm table-bordered">
+                    <tr>
+                        <td>Total Students</td>
+                        <td><t t-esc="total_students"/></td>
+                    </tr>
+                    <tr>
+                        <td>Average GPA</td>
+                        <td><t t-esc="round(avg_gpa, 2)"/></td>
+                    </tr>
+                    <tr>
+                        <td>Total Fees Expected</td>
+                        <td><t t-esc="total_fees"/></td>
+                    </tr>
+                    <tr>
+                        <td>Total Fees Collected</td>
+                        <td><t t-esc="total_paid"/></td>
+                    </tr>
+                    <tr>
+                        <td>Total Outstanding Balance</td>
+                        <td><t t-esc="total_balance"/></td>
+                    </tr>
+                </table>
+
+                <br/>
+
+                <!-- STUDENT LIST -->
+                <h3>Student Academic Overview</h3>
+
+                <table class="table table-sm table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Registration</th>
+                            <th>Course</th>
+                            <th>GPA</th>
+                            <th>Total Fee</th>
+                            <th>Paid</th>
+                            <th>Balance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.student_ids" t-as="student">
+                            <td><t t-esc="student.name"/></td>
+                            <td><t t-esc="student.registration_number"/></td>
+                            <td><t t-esc="student.course_id.name"/></td>
+                            <td><t t-esc="round(student.gpa, 2)"/></td>
+                            <td><t t-esc="student.total_fee"/></td>
+                            <td><t t-esc="student.total_paid"/></td>
+                            <td><t t-esc="student.fee_balance"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div style="page-break-before:always;"></div>
+
+                <!-- DEPARTMENTS -->
+                <h3>Departments</h3>
+                <ul>
+                    <li t-foreach="doc.department_ids" t-as="dept">
+                        <t t-esc="dept.name"/>
+                    </li>
+                </ul>
+
+                <br/>
+
+                <!-- COURSES -->
+                <h3>Courses Offered</h3>
+                <ul>
+                    <li t-foreach="doc.course_ids" t-as="course">
+                        <t t-esc="course.name"/>
+                    </li>
+                </ul>
+
+                <br/><br/>
+
+                <!-- SIGNATURE SECTION -->
+                <div style="margin-top:60px;">
+                    <table style="width:100%;">
+                        <tr>
+                            <td>
+                                ___________________________<br/>
+                                Academic Registrar
+                            </td>
+                            <td style="text-align:right;">
+                                ___________________________<br/>
+                                Vice Chancellor
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <br/>
+                <p style="text-align:center; font-size:12px;">
+                    Generated on: <t t-esc="format_date(env, fields.Date.today())"/>
+                </p>
+
+            </div>
+        </t>
+    </template>
+
+</odoo>

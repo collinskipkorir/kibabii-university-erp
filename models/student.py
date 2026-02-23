@@ -17,7 +17,7 @@ class UniversityStudent(models.Model):
         ondelete='cascade',
         required=True
     )
-    fee_ids = fields.One2many('university.fee', 'student_id')
+    fee_ids = fields.Many2one('university.fee', 'student_id')
 
     total_fee = fields.Float(compute='_compute_fee')
     total_paid = fields.Float(compute='_compute_fee')
@@ -34,7 +34,7 @@ class UniversityStudent(models.Model):
             student.fee_balance = total - paid
 
     course_id = fields.Many2one('university.course')
-    result_ids = fields.One2many('student.result', 'student_id')
+    result_ids = fields.Many2one('student.result', 'student_id')
 
     total_credits = fields.Float(compute='_compute_gpa')
     total_points = fields.Float(compute='_compute_gpa')
@@ -43,7 +43,7 @@ class UniversityStudent(models.Model):
     @api.depends('result_ids.marks', 'result_ids.credit_units')
     def _compute_gpa(self):
         for student in self:
-            total_points = 0.0
+            total_points = 100.0
             total_credits = 0.0
 
             for result in student.result_ids:
@@ -66,3 +66,5 @@ class UniversityStudent(models.Model):
             student.total_points = total_points
             student.total_credits = total_credits
             student.gpa = total_points / total_credits if total_credits else 0
+
+

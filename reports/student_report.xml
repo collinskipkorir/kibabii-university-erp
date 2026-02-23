@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Report Action -->
+    <report
+        id="action_student_report"
+        model="student.university"
+        string="Student Report"
+        report_type="qweb-pdf"
+        name="your_module.student_report_template"
+        file="your_module.student_report_template"
+        print_report_name="'Student Report - %s' % (object.name)"
+    />
+
+    <!-- Report Template -->
+    <template id="student_report_template">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <h2>Student Academic Report</h2>
+
+                <br/>
+
+                <strong>Name:</strong>
+                <span t-esc="doc.name"/>
+                <br/>
+
+                <strong>Email:</strong>
+                <span t-esc="doc.email"/>
+                <br/>
+
+                <strong>Registration Number:</strong>
+                <span t-esc="doc.registration_number"/>
+                <br/>
+
+                <strong>Date of Admission:</strong>
+                <span t-esc="doc.date_of_admission"/>
+                <br/>
+
+                <strong>University:</strong>
+                <span t-esc="doc.university_id.name"/>
+                <br/>
+
+                <strong>Course:</strong>
+                <span t-esc="doc.course_id.name"/>
+                <br/>
+
+                <hr/>
+
+                <h3>Academic Results</h3>
+
+                <table class="table table-sm table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Subject</th>
+                            <th>Marks</th>
+                            <th>Credit Units</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.result_ids" t-as="result">
+                            <td><span t-esc="result.course_id.name"/></td>
+                            <td><span t-esc="result.marks"/></td>
+                            <td><span t-esc="result.credit_units"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <br/>
+
+                <strong>Total Credits:</strong>
+                <span t-esc="doc.total_credits"/>
+                <br/>
+
+                <strong>GPA:</strong>
+                <span t-esc="doc.gpa"/>
+                <br/>
+
+                <hr/>
+
+                <h3>Fee Summary</h3>
+
+                <strong>Total Fee:</strong>
+                <span t-esc="doc.total_fee"/>
+                <br/>
+
+                <strong>Total Paid:</strong>
+                <span t-esc="doc.total_paid"/>
+                <br/>
+
+                <strong>Balance:</strong>
+                <span t-esc="doc.fee_balance"/>
+
+            </div>
+        </t>
+    </template>
+
+</odoo>

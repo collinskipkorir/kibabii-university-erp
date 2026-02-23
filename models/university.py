@@ -21,6 +21,21 @@ class UniversityManagement(models.Model):
         'university_id',
         string="Departments"
     )
+    fee_ids = fields.One2many(
+        comodel_name='university.student',
+        inverse_name='university_id',
+        string="Fees"
+    )
+    course_ids = fields.One2many(
+        'university.course',
+        inverse_name='university_id',
+        string="Courses"
+    )
+    result_ids = fields.One2many(
+        comodel_name='university.result',
+        inverse_name='university_id',
+        string="Results"
+    )
 
 
     @api.constrains('admission_slots_remaining' , 'admission_slots_needed')

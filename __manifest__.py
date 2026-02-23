@@ -5,7 +5,7 @@
     'summary': 'University Erp',
     'description': """This is a university erp system meant to manage the university eco-system""",
     'author': 'collins',
-    'sequence':'-10',
+    'sequence': '-10',
     'depends': ['base', 'account'],
     'data': [
         'security/security.xml',
@@ -13,6 +13,9 @@
         'views/university_departments_views.xml',
         'views/university_student_views.xml',
         'views/menu.xml',
+        'reports/student_report.xml',
+        'reports/university_report.xml',
+        'reports/department_reports.xml',
     ],
 
     'application': True,
