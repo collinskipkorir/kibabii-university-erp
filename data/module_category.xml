@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="module_category_university_erp" model="ir.module.category">
+        <field name="name">University</field>
+        <field name="description">University Management Systems</field>
+        <field name="sequence">15</field>
+    </record>
+
+</odoo>

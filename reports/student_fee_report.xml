@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_student_fee">
+        <t t-call="web.external_layout">
+            <t t-set="title">Student Fee Report</t>
+            <div class="page">
+                <h2>Student Fee Report</h2>
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Fee Type</th>
+                            <th>Amount</th>
+                            <th>Due Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="docs" t-as="fee">
+                            <tr>
+                                <td><t t-esc="fee.student_id.name"/></td>
+                                <td><t t-esc="fee.fee_type"/></td>
+                                <td><t t-esc="fee.amount"/></td>
+                                <td><t t-esc="fee.due_date"/></td>
+                                <td><t t-esc="fee.state"/></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+</odoo>

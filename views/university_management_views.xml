@@ -59,16 +59,22 @@
                     </group>
                 </sheet>
                 <sheet>
-                    <sheet>
-                        ...
-                    </sheet>
 
-                    <div class="oe_chatter">
-                        <field name="message_follower_ids"/>
-                        <field name="activity_ids"/>
-                        <field name="message_ids"/>
+                    <div>
+                        <div>
+                            <button name="%(action_report_student_list)d"
+                                    string="Print Student List"
+                                    type="action"
+                                    class="oe_highlight"/>
+                        </div>
+
                     </div>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
             </form>
         </field>
     </record>

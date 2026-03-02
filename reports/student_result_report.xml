@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_student_result">
+        <t t-call="web.external_layout">
+            <t t-set="title">Student Result Report</t>
+            <div class="page">
+                <h2>Results for <t t-esc="docs[0].student_id.name"/></h2>
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Course</th>
+                            <th>Credit Units</th>
+                            <th>Score</th>
+                            <th>Grade</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="docs" t-as="res">
+                            <tr>
+                                <td><t t-esc="res.course_id.name"/></td>
+                                <td><t t-esc="res.course_id.credit_units"/></td>
+                                <td><t t-esc="res.score"/></td>
+                                <td><t t-esc="res.grade"/></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+</odoo>

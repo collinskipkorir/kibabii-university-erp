@@ -1,24 +1,36 @@
 <odoo>
-    <menuitem id="menu_university_root" name="University"/>
 
-    <menuitem id="menu_university_management"
-              name="Management"
-              parent="menu_university_root"/>
+    <!-- Root App Menu -->
+    <menuitem
+        id="menu_university_root"
+        name="University Management"
+        sequence="10"
+    />
 
+    <!-- Management Menu -->
+    <menuitem
+        id="menu_university_management"
+        name="Management"
+        parent="menu_university_root"
+        sequence="1"
+    />
 
-    <menuitem id="menu_university_root"
-          name="University"
-          sequence="10"
-          action="action_university_department"/>
+    <!-- Departments -->
+    <menuitem
+        id="menu_university_departments"
+        name="Departments"
+        parent="menu_university_management"
+        action="action_university_department"
+        sequence="1"
+    />
 
+    <!-- Students -->
+    <menuitem
+        id="menu_university_students"
+        name="Students"
+        parent="menu_university_management"
+        action="action_university_student"
+        sequence="2"
+    />
 
-    <menuitem id="menu_university_departments"
-              name="Departments"
-              parent="menu_university_management"
-              action="action_university_department"/>
-
-    <menuitem id="menu_university_students"
-              name="Students"
-              parent="menu_university_management"
-              action="action_university_student"/>
 </odoo>

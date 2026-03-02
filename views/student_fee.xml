@@ -1,0 +1,88 @@
+<odoo>
+
+    <!-- =========================
+         (List) View
+    ========================== -->
+    <record id="view_university_fee_list" model="ir.ui.view">
+        <field name="name">university.fee.list</field>
+        <field name="model">university.fee</field>
+        <field name="arch" type="xml">
+            <list string="University Fees">
+                <field name="name"/>
+                <field name="student_id"/>
+                <field name="amount"/>
+                <field name="paid_amount"/>
+                <field name="balance"/>
+                <field name="payment_date"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+
+    <!-- =========================
+         Form View
+    ========================== -->
+    <record id="view_university_fee_form" model="ir.ui.view">
+        <field name="name">university.fee.form</field>
+        <field name="model">university.fee</field>
+        <field name="arch" type="xml">
+            <form string="University Fee">
+
+                <sheet>
+
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="student_id"/>
+                            <field name="university_id"/>
+                        </group>
+
+                        <group>
+                            <field name="amount"/>
+                            <field name="paid_amount"/>
+                            <field name="balance" readonly="1"/>
+                            <field name="payment_date"/>
+                        </group>
+                    </group>
+
+                    <group string="Payment Status">
+                        <field name="state" readonly="1"/>
+                    </group>
+
+                </sheet>
+
+                <!-- Chatter -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+
+            </form>
+        </field>
+    </record>
+
+
+    <!-- =========================
+         Action
+    ========================== -->
+    <record id="action_university_fee" model="ir.actions.act_window">
+        <field name="name">University Fees</field>
+        <field name="res_model">university.fee</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+
+    <!-- =========================
+         Menu
+    ========================== -->
+    <menuitem
+        id="menu_university_fee"
+        name="Student Fees"
+        parent="menu_university_management"
+        action="action_university_fee"
+        sequence="4"
+    />
+
+</odoo>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_student_list">
+        <t t-call="web.external_layout">
+            <t t-set="title">Student List</t>
+            <div class="page">
+                <h2>Student List</h2>
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Admission Number</th>
+                            <th>Course</th>
+                            <th>Department</th>
+                            <th>University</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="docs" t-as="student">
+                            <tr>
+                                <td><t t-esc="student.name"/></td>
+                                <td><t t-esc="student.admission_number"/></td>
+                                <td><t t-esc="student.course_id.name"/></td>
+                                <td><t t-esc="student.department_id.name"/></td>
+                                <td><t t-esc="student.university_id.name"/></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+</odoo>

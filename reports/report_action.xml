@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Student List Report -->
+    <record id="action_report_student_list" model="ir.actions.report">
+        <field name="name">Student List Report</field>
+        <field name="model">student.university</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">kibabii_university_erp.report_student_list</field>
+        <field name="report_file">kibabii_university_erp.report_student_list</field>
+        <field name="print_report_name">'Student_List_' + time.strftime('%Y%m%d')</field>
+    </record>
+
+    <!-- Student Fee Report -->
+    <record id="action_report_student_fee" model="ir.actions.report">
+        <field name="name">Student Fee Report</field>
+        <field name="model">student.fee</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">kibabii_university_erp.report_student_fee</field>
+        <field name="report_file">kibabii_university_erp.report_student_fee</field>
+        <field name="print_report_name">'Student_Fee_' + time.strftime('%Y%m%d')</field>
+    </record>
+
+    <!-- Student Result Report -->
+    <record id="action_report_student_result" model="ir.actions.report">
+        <field name="name">Student Result Report</field>
+        <field name="model">student.result</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">kibabii_university_erp.report_student_result</field>
+        <field name="report_file">kibabii_university_erp.report_student_result</field>
+        <field name="print_report_name">'Student_Result_' + (object.student_id.name or '') + '_' + time.strftime('%Y%m%d')</field>
+    </record>
+
+</odoo>

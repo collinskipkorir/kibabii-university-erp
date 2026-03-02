@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- University Managers: Full access to Students -->
+    <record id="rule_student_university_manager" model="ir.rule">
+        <field name="name">University Manager: All Students</field>
+        <field name="model_id" ref="model_student_university"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('kibabii_university_erp.group_university_manager'))]"/>
+    </record>
+
+    <!-- University Managers: Full access to Student Fees -->
+    <record id="rule_student_fee_manager" model="ir.rule">
+        <field name="name">University Manager: All Student Fees</field>
+        <field name="model_id" ref="model_university_fee"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('kibabii_university_erp.group_university_manager'))]"/>
+    </record>
+
+    <!-- University Managers: Full access to Student Results -->
+    <record id="rule_student_result_manager" model="ir.rule">
+        <field name="name">University Manager: All Results</field>
+        <field name="model_id" ref="model_student_result"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('kibabii_university_erp.group_university_manager'))]"/>
+    </record>
+
+</odoo>

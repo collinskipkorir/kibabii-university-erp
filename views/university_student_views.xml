@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <odoo>
 
+    ```
     <!-- List View -->
     <record id="view_university_student_list" model="ir.ui.view">
         <field name="name">student.university.list</field>
@@ -11,6 +13,7 @@
                 <field name="registration_number"/>
                 <field name="email"/>
                 <field name="phone_number"/>
+                <field name="gender"/>
                 <field name="date_of_admission"/>
                 <field name="university_id"/>
             </list>
@@ -32,6 +35,7 @@
                         <group>
                             <field name="email"/>
                             <field name="phone_number"/>
+                            <field name="gender" widget="selection"/>
                         </group>
                     </group>
                     <group>
@@ -41,17 +45,11 @@
                         <field name="university_id"/>
                     </group>
                 </sheet>
-                <sheet>
-                    <sheet>
-                        ...
-                    </sheet>
-
-                    <div class="oe_chatter">
-                        <field name="message_follower_ids"/>
-                        <field name="activity_ids"/>
-                        <field name="message_ids"/>
-                    </div>
-                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
             </form>
         </field>
     </record>
@@ -62,5 +60,6 @@
         <field name="res_model">student.university</field>
         <field name="view_mode">list,form</field>
     </record>
+    ```
 
 </odoo>
