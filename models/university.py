@@ -11,12 +11,12 @@ class UniversityManagement(models.Model):
     # =========================
     # Basic Information
     # =========================
-    name = fields.Char(
-        string='University Name',
-        required=True,
-        tracking=True
-    )
-
+    # name = fields.Char(
+       # string='University Name',
+       # required=True,
+        #tracking=True
+    ##)
+    name = fields.Char(string='University Name')
     code = fields.Char(
         string='University Code',
         readonly=True,
