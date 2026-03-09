@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="university_list_template" name="University List">
+        <t t-call="website.layout">
+
+            <div class="container mt-5">
+
+                <h1 class="text-center">Universities</h1>
+
+                <div class="row">
+
+                    <t t-foreach="universities" t-as="uni">
+
+                        <div class="col-md-4 mt-4">
+
+                            <div class="card p-3">
+
+                                <h4>
+                                    <t t-esc="uni.name"/>
+                                </h4>
+
+                                <p>
+                                    <t t-esc="uni.description"/>
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </t>
+
+                </div>
+
+            </div>
+
+        </t>
+    </template>
+
+</odoo>

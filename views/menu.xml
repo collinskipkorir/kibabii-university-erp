@@ -35,4 +35,11 @@
               parent="menu_university_management"
               action="action_university_student"/>
 
+    <record id="menu_universities" model="website.menu">
+        <field name="name">Universities</field>
+        <field name="url">/universities</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" eval="30"/>
+    </record>
+
 </odoo>

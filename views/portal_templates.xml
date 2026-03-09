@@ -1,0 +1,38 @@
+<odoo>
+
+    <template id="student_dashboard_template" name="Student Portal">
+        <t t-call="website.layout">
+
+            <div class="container mt-5">
+
+                <h2>Student Dashboard</h2>
+
+                <t t-if="student">
+
+                    <p>
+                        <strong>Name:</strong>
+                        <t t-esc="student.name"/>
+                    </p>
+
+                    <p>
+                        <strong>Email:</strong>
+                        <t t-esc="student.email"/>
+                    </p>
+
+                    <p>
+                        <strong>Course:</strong>
+                        <t t-esc="student.course_id.name"/>
+                    </p>
+
+                </t>
+
+                <t t-else="">
+                    <p>No student record found.</p>
+                </t>
+
+            </div>
+
+        </t>
+    </template>
+
+</odoo>

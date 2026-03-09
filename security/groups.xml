@@ -9,4 +9,11 @@
         <field name="name">Student</field>
     </record>
 
+    <record id="student_portal_rule" model="ir.rule">
+        <field name="name">Student Own Record</field>
+        <field name="model_id" ref="model_student_university"/>
+        <field name="groups" eval="[(4, ref('kibabii_university_erp.group_student'))]"/>
+        <field name="domain_force">[('user_id','=',user.id)]</field>
+    </record>
+
 </odoo>

@@ -7,7 +7,7 @@
     'author': 'Collins',
     'category': 'University',
     'sequence': -10,
-    'depends': ['base', 'account'],
+    'depends': ['base', 'account' , 'website' 'portal'],
     'license': 'LGPL-3',
     'data': [
         # security
@@ -25,6 +25,11 @@
         'views/university_departments_views.xml',
         'views/university_student_views.xml',
         'views/menu.xml',
+        'views/portal_templates.xml'
+
+
+         # website template
+         'website_templates.xml',
 
         # Report templates
         'reports/university_report.xml',
