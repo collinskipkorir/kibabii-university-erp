@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <template id="report_student_fee">
-        <t t-call="web.external_layout">
+        <t t-call="web.html_container"><t t-foreach="docs" t-as="doc"><t t-call="web.external_layout">
             <t t-set="title">Student Fee Report</t>
             <div class="page">
                 <h2>Student Fee Report</h2>
@@ -11,17 +10,17 @@
                             <th>Student</th>
                             <th>Fee Type</th>
                             <th>Amount</th>
-                            <th>Due Date</th>
+                            <th>Payment Date</th>
                             <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <t t-foreach="docs" t-as="fee">
+                        <t t-foreach="[doc]" t-as="fee">
                             <tr>
                                 <td><t t-esc="fee.student_id.name"/></td>
-                                <td><t t-esc="fee.fee_type"/></td>
+                                <td><t t-esc="fee.name"/></td>
                                 <td><t t-esc="fee.amount"/></td>
-                                <td><t t-esc="fee.due_date"/></td>
+                                <td><t t-esc="fee.payment_date"/></td>
                                 <td><t t-esc="fee.state"/></td>
                             </tr>
                         </t>
@@ -29,5 +28,5 @@
                 </table>
             </div>
         </t>
-    </template>
+    </t></t></template>
 </odoo>

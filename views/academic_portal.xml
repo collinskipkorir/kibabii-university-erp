@@ -1,0 +1,102 @@
+<odoo>
+    <template id="academic_dashboard_links" inherit_id="kibabii-university-erp.student_dashboard_template" name="Academic Student Dashboard">
+        <xpath expr="//h2" position="after">
+            <div t-if="student" class="alert alert-info">
+                <strong>Registration status: </strong><span t-field="student.registration_state"/>
+                <p class="mb-0">Programme: <span t-field="student.programme_id.name"/></p>
+                <p class="mb-0">Published credits: <span t-field="student.published_credits"/> | GPA: <span t-field="student.published_gpa"/></p>
+            </div>
+            <nav class="d-flex flex-wrap gap-2 mb-4">
+                <a class="btn btn-outline-primary" href="/my/student/profile">My Profile and Documents</a>
+                <a class="btn btn-outline-primary" href="/my/student/courses">Course Registration</a>
+                <a class="btn btn-outline-primary" href="/my/student/timetable">Timetable</a>
+                <a class="btn btn-outline-primary" href="/my/student/attendance">Attendance</a>
+                <a class="btn btn-outline-primary" href="/my/student/appeals">Academic Appeals</a>
+            </nav>
+        </xpath>
+    </template>
+    <template id="academic_student_profile" name="Student Profile and Documents">
+        <t t-call="portal.portal_layout"><div class="container my-4">
+            <a href="/my/student">Student Dashboard</a><h2>My Student Profile</h2>
+            <p>Status: <span t-field="student.registration_state"/> | Admission: <span t-field="student.admission_number"/></p>
+            <p class="text-muted">Save your details and upload your identity and qualification documents, then submit for review. Admission and registration require Academic Office approval.</p>
+            <div t-if="error" class="alert alert-danger" t-esc="error"/>
+            <div t-if="student.decision_reason" class="alert alert-warning" t-esc="student.decision_reason"/>
+            <form action="/my/student/profile/save" method="post">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                <div class="row g-3">
+                    <t t-foreach="[('name','Full Name'),('date_of_birth','Date of Birth'),('identity_number','Identity Number'),('intake','Intake'),('previous_school','Previous School'),('entry_qualification','Entry Qualification')]" t-as="item">
+                        <div class="col-md-6"><label t-att-for="'profile_'+item[0]" class="form-label" t-esc="item[1]"/>
+                            <input t-att-id="'profile_'+item[0]" t-att-name="item[0]" t-att-type="'date' if item[0]=='date_of_birth' else 'text'" t-att-value="student[item[0]] or ''" t-att-readonly="student.registration_state != 'applicant'" class="form-control"/>
+                        </div>
+                    </t>
+                    <div class="col-md-6"><label for="profile_programme" class="form-label">Programme</label><select id="profile_programme" name="programme_id" class="form-select" t-att-disabled="student.registration_state != 'applicant'">
+                        <option value="">Select programme</option><option t-foreach="programmes" t-as="programme" t-att-value="programme.id" t-att-selected="programme==student.programme_id" t-esc="programme.name"/>
+                    </select></div>
+                    <div class="col-md-6"><label for="profile_year" class="form-label">Academic Year</label><select id="profile_year" name="academic_year_id" class="form-select" t-att-disabled="student.registration_state != 'applicant'">
+                        <option value="">Select year</option><option t-foreach="years" t-as="year" t-att-value="year.id" t-att-selected="year==student.academic_year_id" t-esc="year.name"/>
+                    </select></div>
+                    <div class="col-md-6"><label for="profile_nationality" class="form-label">Nationality</label><select id="profile_nationality" name="nationality_id" class="form-select" t-att-disabled="student.registration_state != 'applicant'">
+                        <option value="">Select nationality</option><option t-foreach="countries" t-as="country" t-att-value="country.id" t-att-selected="country==student.nationality_id" t-esc="country.name"/>
+                    </select></div>
+                    <div class="col-md-6"><label for="profile_country" class="form-label">Country of Residence</label><select id="profile_country" name="country_id" class="form-select" t-att-disabled="student.registration_state != 'applicant'">
+                        <option value="">Select country</option><option t-foreach="countries" t-as="country" t-att-value="country.id" t-att-selected="country==student.country_id" t-esc="country.name"/>
+                    </select></div>
+                    <div class="col-md-4"><label for="profile_mode" class="form-label">Study Mode</label><select id="profile_mode" name="study_mode" class="form-select" t-att-disabled="student.registration_state != 'applicant'">
+                        <option value="full_time" t-att-selected="student.study_mode=='full_time'">Full Time</option><option value="part_time" t-att-selected="student.study_mode=='part_time'">Part Time</option><option value="distance" t-att-selected="student.study_mode=='distance'">Distance Learning</option>
+                    </select></div>
+                    <div class="col-md-4"><label for="profile_gender" class="form-label">Gender</label><select id="profile_gender" name="gender" class="form-select" t-att-disabled="student.registration_state != 'applicant'">
+                        <option value="">Select</option><option value="male" t-att-selected="student.gender=='male'">Male</option><option value="female" t-att-selected="student.gender=='female'">Female</option>
+                    </select></div>
+                    <div class="col-md-4"><label for="profile_identity_type" class="form-label">Identity Type</label><select id="profile_identity_type" name="identity_type" class="form-select" t-att-disabled="student.registration_state != 'applicant'">
+                        <option value="national_id" t-att-selected="student.identity_type=='national_id'">National ID</option><option value="passport" t-att-selected="student.identity_type=='passport'">Passport</option><option value="birth_certificate" t-att-selected="student.identity_type=='birth_certificate'">Birth Certificate</option>
+                    </select></div>
+                </div>
+                <h3 class="mt-4">Address, Family and Emergency Contacts</h3>
+                <div class="row g-3">
+                    <t t-foreach="[('phone_number','Phone'),('street','Street Address'),('street2','Address Line 2'),('city','City / Town'),('postal_code','Postal Code'),('guardian_name','Guardian Name'),('guardian_relationship','Guardian Relationship'),('guardian_phone','Guardian Phone'),('guardian_email','Guardian Email'),('emergency_name','Emergency Contact'),('emergency_relationship','Emergency Relationship'),('emergency_phone','Emergency Phone'),('sponsor_name','Sponsor Name'),('sponsor_contact','Sponsor Contact')]" t-as="item">
+                        <div class="col-md-6"><label t-att-for="'contact_'+item[0]" class="form-label" t-esc="item[1]"/><input t-att-id="'contact_'+item[0]" t-att-name="item[0]" t-att-value="student[item[0]] or ''" class="form-control"/></div>
+                    </t>
+                </div>
+                <div class="my-4 d-flex gap-2"><button class="btn btn-primary" type="submit">Save Details</button><button t-if="student.registration_state=='applicant'" class="btn btn-success" type="submit" name="submit_application" value="1">Submit Application for Review</button></div>
+            </form>
+            <h3>Supporting Documents</h3>
+            <table class="table"><thead><tr><th>Document</th><th>Type</th><th>Verification</th><th>Notes</th></tr></thead><tbody><tr t-foreach="student.document_ids" t-as="doc"><td t-esc="doc.name"/><td t-esc="doc.kind"/><td t-esc="doc.state"/><td t-esc="doc.notes or ''"/></tr></tbody></table>
+            <form t-if="student.registration_state=='applicant'" action="/my/student/document" method="post" enctype="multipart/form-data" class="row g-3">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                <div class="col-md-4"><label for="upload_kind" class="form-label">Document Type</label><select id="upload_kind" name="kind" class="form-select"><option value="identity">Identity</option><option value="qualification">Qualification</option><option value="photo">Photograph</option><option value="other">Other</option></select></div>
+                <div class="col-md-5"><label for="upload_file" class="form-label">PDF, JPEG or PNG (up to 10 MB)</label><input id="upload_file" type="file" name="document" accept="application/pdf,image/jpeg,image/png" required="required" class="form-control"/></div>
+                <div class="col-md-3 align-self-end"><button class="btn btn-outline-primary" type="submit">Upload Document</button></div>
+            </form>
+        </div></t>
+    </template>
+    <template id="academic_student_courses" name="Student Course Registration">
+        <t t-call="portal.portal_layout"><div class="container my-4">
+            <a href="/my/student">Student Dashboard</a><h2>Course Registration</h2>
+            <div t-if="error" class="alert alert-danger" t-esc="error"/>
+            <p t-if="student.registration_state!='registered'" class="alert alert-info">The Academic Office must confirm your student registration before you can request course units.</p>
+            <h3>My Requests and Approved Classes</h3>
+            <table class="table"><thead><tr><th>Class</th><th>Credits</th><th>Status</th><th>Reason</th></tr></thead><tbody><tr t-foreach="student.registration_ids" t-as="reg"><td t-esc="reg.offering_id.name"/><td t-esc="reg.credit_units"/><td t-esc="reg.state"/><td t-esc="reg.reason or ''"/></tr></tbody></table>
+            <h3>Available Classes</h3>
+            <table class="table"><thead><tr><th>Class</th><th>Credits</th><th>Prerequisites</th><th>Request</th></tr></thead><tbody><tr t-foreach="offerings" t-as="offering"><td t-esc="offering.name"/><td t-esc="offering.course_id.credit_units"/><td t-esc="', '.join(offering.course_id.prerequisite_ids.mapped('name'))"/><td><form action="/my/student/courses/register" method="post"><input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/><input type="hidden" name="offering_id" t-att-value="offering.id"/><button class="btn btn-primary btn-sm" type="submit">Request Registration</button></form></td></tr></tbody></table>
+        </div></t>
+    </template>
+    <template id="academic_student_timetable" name="Student Timetable">
+        <t t-call="portal.portal_layout"><div class="container my-4"><a href="/my/student">Student Dashboard</a><h2>My Timetable</h2>
+            <table class="table"><thead><tr><th>Class</th><th>Venue</th><th>Start</th><th>End</th></tr></thead><tbody><tr t-foreach="sessions" t-as="session"><td t-esc="session.name"/><td t-esc="session.venue"/><td><span t-field="session.start_datetime"/></td><td><span t-field="session.end_datetime"/></td></tr></tbody></table>
+        </div></t>
+    </template>
+    <template id="academic_student_attendance" name="Student Attendance">
+        <t t-call="portal.portal_layout"><div class="container my-4"><a href="/my/student">Student Dashboard</a><h2>My Attendance</h2>
+            <t t-foreach="registrations" t-as="reg"><h3 t-esc="reg.offering_id.name"/><p>Attendance: <span t-esc="'%.1f' % reg.attendance_rate"/>% | Policy minimum: <span t-esc="reg.policy_id.minimum_attendance"/>%</p><p t-if="reg.absence_flag" class="alert alert-warning">Your attendance is below the approved threshold. Contact your programme coordinator.</p><table class="table"><thead><tr><th>Session</th><th>Date</th><th>Status</th></tr></thead><tbody><tr t-foreach="reg.attendance_ids" t-as="line"><td t-esc="line.session_id.name"/><td><span t-field="line.session_id.start_datetime"/></td><td t-esc="line.status"/></tr></tbody></table></t>
+        </div></t>
+    </template>
+    <template id="academic_student_appeals" name="Student Academic Appeals">
+        <t t-call="portal.portal_layout"><div class="container my-4"><a href="/my/student">Student Dashboard</a><h2>Academic Appeals</h2>
+            <div t-if="error" class="alert alert-danger" t-esc="error"/>
+            <p>Appeals must be submitted within the appeal period in the published result's approved academic policy.</p>
+            <form action="/my/student/appeals/submit" method="post" class="mb-4"><input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/><label for="appeal_result" class="form-label">Published Result</label><select id="appeal_result" name="result_id" required="required" class="form-select mb-3"><option value="">Select result</option><option t-foreach="results" t-as="result" t-att-value="result.id" t-esc="'%s / %s' % (result.course_id.name,result.marks)"/></select><label for="appeal_reason" class="form-label">Appeal Reason</label><textarea id="appeal_reason" name="reason" required="required" class="form-control mb-3"/><button class="btn btn-primary" type="submit">Submit Appeal</button></form>
+            <table class="table"><thead><tr><th>Course</th><th>Reason</th><th>Status</th><th>Resolution</th></tr></thead><tbody><tr t-foreach="appeals" t-as="appeal"><td t-esc="appeal.result_id.course_id.name"/><td t-esc="appeal.reason"/><td t-esc="appeal.state"/><td t-esc="appeal.resolution or ''"/></tr></tbody></table>
+        </div></t>
+    </template>
+</odoo>

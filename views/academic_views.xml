@@ -1,0 +1,798 @@
+<odoo>
+  <record id="p7_university_academic_year_list" model="ir.ui.view">
+    <field name="name">university.academic.year.list</field>
+    <field name="model">university.academic.year</field>
+    <field name="priority">1</field>
+    <field name="arch" type="xml">
+      <list string="Academic Years">
+        <field name="name"/>
+        <field name="date_start"/>
+        <field name="date_end"/>
+      </list>
+    </field>
+  </record>
+  <record id="p7_university_academic_year_form" model="ir.ui.view">
+    <field name="name">university.academic.year.form</field>
+    <field name="model">university.academic.year</field>
+    <field name="priority">1</field>
+    <field name="arch" type="xml">
+      <form string="Academic Years">
+        <header/>
+        <sheet>
+          <group>
+            <field name="name"/>
+            <field name="date_start"/>
+            <field name="date_end"/>
+            <field name="active"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+  <record id="p7_action_university_academic_year" model="ir.actions.act_window">
+    <field name="name">Academic Years</field>
+    <field name="res_model">university.academic.year</field>
+    <field name="view_mode">list,form</field>
+  </record>
+  <record id="p7_university_semester_list" model="ir.ui.view">
+    <field name="name">university.semester.list</field>
+    <field name="model">university.semester</field>
+    <field name="priority">1</field>
+    <field name="arch" type="xml">
+      <list string="Semesters">
+        <field name="name"/>
+        <field name="year_id"/>
+        <field name="date_start"/>
+        <field name="date_end"/>
+      </list>
+    </field>
+  </record>
+  <record id="p7_university_semester_form" model="ir.ui.view">
+    <field name="name">university.semester.form</field>
+    <field name="model">university.semester</field>
+    <field name="priority">1</field>
+    <field name="arch" type="xml">
+      <form string="Semesters">
+        <header/>
+        <sheet>
+          <group>
+            <field name="name"/>
+            <field name="year_id"/>
+            <field name="date_start"/>
+            <field name="date_end"/>
+            <field name="registration_start"/>
+            <field name="registration_end"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+  <record id="p7_action_university_semester" model="ir.actions.act_window">
+    <field name="name">Semesters</field>
+    <field name="res_model">university.semester</field>
+    <field name="view_mode">list,form</field>
+  </record>
+  <record id="p7_university_academic_policy_list" model="ir.ui.view">
+    <field name="name">university.academic.policy.list</field>
+    <field name="model">university.academic.policy</field>
+    <field name="priority">1</field>
+    <field name="arch" type="xml">
+      <list string="Academic Policy Versions">
+        <field name="name"/>
+        <field name="version"/>
+        <field name="state"/>
+      </list>
+    </field>
+  </record>
+  <record id="p7_university_academic_policy_form" model="ir.ui.view">
+    <field name="name">university.academic.policy.form</field>
+    <field name="model">university.academic.policy</field>
+    <field name="priority">1</field>
+    <field name="arch" type="xml">
+      <form string="Academic Policy Versions">
+        <header>
+          <button name="action_approve" type="object" string="Approve Policy" class="btn-primary" invisible="state not in ('draft',)" groups="kibabii-university-erp.group_university_manager,kibabii-university-erp.group_registrar,kibabii-university-erp.group_exam_board"/>
+          <field name="state" widget="statusbar"/>
+        </header>
+        <sheet>
+          <group>
+            <field name="name"/>
+            <field name="version"/>
+            <field name="ca_weight"/>
+            <field name="exam_weight"/>
+            <field name="pass_mark"/>
+            <field name="a_min"/>
+            <field name="b_min"/>
+            <field name="c_min"/>
+            <field name="d_min"/>
+            <field name="a_points"/>
+            <field name="b_points"/>
+            <field name="c_points"/>
+            <field name="d_points"/>
+            <field name="minimum_attendance"/>
+            <field name="minimum_progression_credits"/>
+            <field name="minimum_gpa"/>
+            <field name="maximum_failed_courses"/>
+            <field name="maximum_repeat_attempts"/>
+            <field name="appeal_days"/>
+            <field name="approved_by"/>
+            <field name="approved_on"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+  <record id="p7_action_university_academic_policy" model="ir.actions.act_window">
+    <field name="name">Academic Policy Versions</field>
+    <field name="res_model">university.academic.policy</field>
+    <field name="view_mode">list,form</field>
+  </record>
+  <record id="p7_university_programme_list" model="ir.ui.view">
+    <field name="name">university.programme.list</field>
+    <field name="model">university.programme</field>
+    <field name="priority">1</field>
+    <field name="arch" type="xml">
+      <list string="Programmes">
+        <field name="name"/>
+        <field name="code"/>
+        <field name="department_id"/>
+        <field name="coordinator_id"/>
+        <field name="required_credits"/>
+      </list>
+    </field>
+  </record>
+  <record id="p7_university_programme_form" model="ir.ui.view">
+    <field name="name">university.programme.form</field>
+    <field name="model">university.programme</field>
+    <field name="priority">1</field>
+    <field name="arch" type="xml">
+      <form string="Programmes">
+        <header/>
+        <sheet>
+          <group>
+            <field name="name"/>
+            <field name="code"/>
+            <field name="department_id"/>
+            <field name="coordinator_id"/>
+            <field name="required_credits"/>
+            <field name="duration_years"/>
+            <field name="policy_id"/>
+            <field name="course_ids"/>
+            <field name="active"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+  <record id="p7_action_university_programme" model="ir.actions.act_window">
+    <field name="name">Programmes</field>
+    <field name="res_model">university.programme</field>
+    <field name="view_mode">list,form</field>
+  </record>
+  <record id="p7_university_course_offering_list" model="ir.ui.view">
+    <field name="name">university.course.offering.list</field>
+    <field name="model">university.course.offering</field>
+    <field name="priority">1</field>
+    <field name="arch" type="xml">
+      <list string="Semester Course Offerings">
+        <field name="name"/>
+        <field name="lecturer_id"/>
+        <field name="capacity"/>
+        <field name="state"/>
+      </list>
+    </field>
+  </record>
+  <record id="p7_university_course_offering_form" model="ir.ui.view">
+    <field name="name">university.course.offering.form</field>
+    <field name="model">university.course.offering</field>
+    <field name="priority">1</field>
+    <field name="arch" type="xml">
+      <form string="Semester Course Offerings">
+        <header>
+          <button name="action_open" type="object" string="Open Registration" class="btn-primary" invisible="state not in ('draft',)" groups="kibabii-university-erp.group_university_manager,kibabii-university-erp.group_registrar,kibabii-university-erp.group_coordinator"/>
+          <button name="action_close" type="object" string="Close Registration" class="btn-primary" invisible="state not in ('open',)" groups="kibabii-university-erp.group_university_manager,kibabii-university-erp.group_registrar,kibabii-university-erp.group_coordinator"/>
+          <field name="state" widget="statusbar"/>
+        </header>
+        <sheet>
+          <group>
+            <field name="course_id"/>
+            <field name="programme_id"/>
+            <field name="semester_id"/>
+            <field name="lecturer_id"/>
+            <field name="policy_id"/>
+            <field name="capacity"/>
+            <field name="registration_ids" readonly="1"/>
+            <field name="session_ids" readonly="1"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+  <record id="p7_action_university_course_offering" model="ir.actions.act_window">
+    <field name="name">Semester Course Offerings</field>
+    <field name="res_model">university.course.offering</field>
+    <field name="view_mode">list,form</field>
+  </record>
+  <record id="p7_university_course_registration_list" model="ir.ui.view">
+    <field name="name">university.course.registration.list</field>
+    <field name="model">university.course.registration</field>
+    <field name="priority">1</field>
+    <field name="arch" type="xml">
+      <list string="Course Registrations / Class Lists">
+        <field name="student_id"/>
+        <field name="offering_id"/>
+        <field name="state"/>
+        <field name="attendance_rate"/>
+        <field name="absence_flag"/>
+      </list>
+    </field>
+  </record>
+  <record id="p7_university_course_registration_form" model="ir.ui.view">
+    <field name="name">university.course.registration.form</field>
+    <field name="model">university.course.registration</field>
+    <field name="priority">1</field>
+    <field name="arch" type="xml">
+      <form string="Course Registrations / Class Lists">
+        <header>
+          <button name="action_submit" type="object" string="Submit" class="btn-primary" invisible="state not in ('draft',)" groups="kibabii-university-erp.group_university_manager,kibabii-university-erp.group_registrar,kibabii-university-erp.group_coordinator"/>
+          <button name="action_approve" type="object" string="Approve" class="btn-primary" invisible="state not in ('submitted',)" groups="kibabii-university-erp.group_university_manager,kibabii-university-erp.group_registrar,kibabii-university-erp.group_coordinator"/>
+          <button name="action_reject" type="object" string="Reject" class="btn-primary" invisible="state not in ('submitted',)" groups="kibabii-university-erp.group_university_manager,kibabii-university-erp.group_registrar,kibabii-university-erp.group_coordinator"/>
+          <button name="action_cancel" type="object" string="Cancel" class="btn-primary" invisible="state not in ('draft', 'submitted', 'approved')" groups="kibabii-university-erp.group_university_manager,kibabii-university-erp.group_registrar"/>
+          <button name="action_prepare_result" type="object" string="Enter Assessment" class="btn-primary" invisible="state not in ('approved',)" groups="kibabii-university-erp.group_university_manager,kibabii-university-erp.group_registrar,kibabii-university-erp.group_coordinator,kibabii-university-erp.group_lecturer"/>
+          <button name="action_flag_absence" type="object" string="Refer Absence" class="btn-primary" invisible="state not in ('approved',)" groups="kibabii-university-erp.group_university_manager,kibabii-university-erp.group_registrar,kibabii-university-erp.group_coordinator,kibabii-university-erp.group_lecturer"/>
+          <field name="state" widget="statusbar"/>
+          <button name="action_reset" type="object" string="Reopen Request" invisible="state not in ('rejected','cancelled')" groups="kibabii-university-erp.group_registrar,kibabii-university-erp.group_coordinator,kibabii-university-erp.group_university_manager"/>
+        </header>
+        <sheet>
+          <group>
+            <field name="student_id"/>
+            <field name="offering_id"/>
+            <field name="course_id"/>
+            <field name="semester_id"/>
+            <field name="policy_id"/>
+            <field name="credit_units"/>
+            <field name="state"/>
+            <field name="reason"/>
+            <field name="approved_by"/>
+            <field name="approved_on"/>
+            <field name="attempt_number"/>
+            <field name="attendance_rate"/>
+            <field name="absence_flag"/>
+            <field name="result_ids" readonly="1"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+  <record id="p7_action_university_course_registration" model="ir.actions.act_window">
+    <field name="name">Course Registrations / Class Lists</field>
+    <field name="res_model">university.course.registration</field>
+    <field name="view_mode">list,form</field>
+  </record>
+  <record id="p7_university_class_session_list" model="ir.ui.view">
+    <field name="name">university.class.session.list</field>
+    <field name="model">university.class.session</field>
+    <field name="priority">1</field>
+    <field name="arch" type="xml">
+      <list string="Timetable / Class Sessions">
+        <field name="name"/>
+        <field name="offering_id"/>
+        <field name="venue"/>
+        <field name="start_datetime"/>
+        <field name="end_datetime"/>
+        <field name="state"/>
+      </list>
+    </field>
+  </record>
+  <record id="p7_university_class_session_form" model="ir.ui.view">
+    <field name="name">university.class.session.form</field>
+    <field name="model">university.class.session</field>
+    <field name="priority">1</field>
+    <field name="arch" type="xml">
+      <form string="Timetable / Class Sessions">
+        <header>
+          <button name="action_publish" type="object" string="Publish Timetable" class="btn-primary" invisible="state not in ('draft',)" groups="kibabii-university-erp.group_university_manager,kibabii-university-erp.group_registrar,kibabii-university-erp.group_coordinator"/>
+          <button name="action_prepare_attendance" type="object" string="Generate Class Attendance" class="btn-primary" invisible="state not in ('published',)" groups="kibabii-university-erp.group_university_manager,kibabii-university-erp.group_registrar,kibabii-university-erp.group_coordinator,kibabii-university-erp.group_lecturer"/>
+          <button name="action_complete" type="object" string="Finalize Attendance" class="btn-primary" invisible="state not in ('published',)" groups="kibabii-university-erp.group_university_manager,kibabii-university-erp.group_registrar,kibabii-university-erp.group_coordinator,kibabii-university-erp.group_lecturer"/>
+          <button name="action_cancel" type="object" string="Cancel Session" class="btn-primary" invisible="state not in ('draft', 'published')" groups="kibabii-university-erp.group_university_manager,kibabii-university-erp.group_registrar,kibabii-university-erp.group_coordinator"/>
+          <field name="state" widget="statusbar"/>
+        </header>
+        <sheet>
+          <group>
+            <field name="name"/>
+            <field name="offering_id"/>
+            <field name="lecturer_id"/>
+            <field name="venue"/>
+            <field name="start_datetime"/>
+            <field name="end_datetime"/>
+            <field name="attendance_ids" readonly="1"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+  <record id="p7_action_university_class_session" model="ir.actions.act_window">
+    <field name="name">Timetable / Class Sessions</field>
+    <field name="res_model">university.class.session</field>
+    <field name="view_mode">list,form</field>
+    <field name="view_mode">calendar,list,form</field>
+  </record>
+  <record id="p7_university_class_attendance_list" model="ir.ui.view">
+    <field name="name">university.class.attendance.list</field>
+    <field name="model">university.class.attendance</field>
+    <field name="priority">1</field>
+    <field name="arch" type="xml">
+      <list string="Class Attendance" editable="bottom" create="0" delete="0">
+        <field name="session_id" readonly="1"/>
+        <field name="student_id"/>
+        <field name="status"/>
+      </list>
+    </field>
+  </record>
+  <record id="p7_university_class_attendance_form" model="ir.ui.view">
+    <field name="name">university.class.attendance.form</field>
+    <field name="model">university.class.attendance</field>
+    <field name="priority">1</field>
+    <field name="arch" type="xml">
+      <form string="Class Attendance">
+        <header/>
+        <sheet>
+          <group>
+            <field name="session_id"/>
+            <field name="registration_id"/>
+            <field name="student_id"/>
+            <field name="status"/>
+            <field name="correction_reason"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+  <record id="p7_action_university_class_attendance" model="ir.actions.act_window">
+    <field name="name">Class Attendance</field>
+    <field name="res_model">university.class.attendance</field>
+    <field name="view_mode">list,form</field>
+  </record>
+  <record id="p7_student_result_list" model="ir.ui.view">
+    <field name="name">student.result.list</field>
+    <field name="model">student.result</field>
+    <field name="priority">1</field>
+    <field name="arch" type="xml">
+      <list string="Assessment and Result Approval">
+        <field name="student_id"/>
+        <field name="course_id"/>
+        <field name="semester_id"/>
+        <field name="marks"/>
+        <field name="grade"/>
+        <field name="state"/>
+      </list>
+    </field>
+  </record>
+  <record id="p7_student_result_form" model="ir.ui.view">
+    <field name="name">student.result.form</field>
+    <field name="model">student.result</field>
+    <field name="priority">1</field>
+    <field name="arch" type="xml">
+      <form string="Assessment and Result Approval">
+        <header>
+          <button name="action_submit" type="object" string="Submit Marks" class="btn-primary" invisible="state not in ('draft',)" groups="kibabii-university-erp.group_university_manager,kibabii-university-erp.group_registrar,kibabii-university-erp.group_coordinator,kibabii-university-erp.group_lecturer"/>
+          <button name="action_moderate" type="object" string="Department Moderation" class="btn-primary" invisible="state not in ('submitted',)" groups="kibabii-university-erp.group_university_manager,kibabii-university-erp.group_registrar,kibabii-university-erp.group_coordinator"/>
+          <button name="action_approve" type="object" string="Board Approval" class="btn-primary" invisible="state not in ('moderated',)" groups="kibabii-university-erp.group_university_manager,kibabii-university-erp.group_exam_board"/>
+          <button name="action_publish" type="object" string="Publish" class="btn-primary" invisible="state not in ('approved',)" groups="kibabii-university-erp.group_university_manager,kibabii-university-erp.group_registrar"/>
+          <button name="action_reopen" type="object" string="Reopen with Reason" class="btn-primary" invisible="state not in ('submitted', 'moderated', 'approved', 'published')" groups="kibabii-university-erp.group_university_manager,kibabii-university-erp.group_registrar,kibabii-university-erp.group_exam_board"/>
+          <field name="state" widget="statusbar"/>
+        </header>
+        <sheet>
+          <group>
+            <field name="registration_id"/>
+            <field name="student_id"/>
+            <field name="course_id"/>
+            <field name="credit_units"/>
+            <field name="policy_id"/>
+            <field name="ca_mark"/>
+            <field name="exam_mark"/>
+            <field name="ca_entered"/>
+            <field name="exam_entered"/>
+            <field name="marks" readonly="1"/>
+            <field name="grade"/>
+            <field name="grade_point"/>
+            <field name="status"/>
+            <field name="moderation_note"/>
+            <field name="amendment_reason"/>
+            <field name="revision"/>
+            <field name="approved_by"/>
+            <field name="approved_on"/>
+            <field name="published_by"/>
+            <field name="published_on"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+  <record id="p7_action_student_result" model="ir.actions.act_window">
+    <field name="name">Assessment and Result Approval</field>
+    <field name="res_model">student.result</field>
+    <field name="view_mode">list,form</field>
+  </record>
+  <record id="p7_university_academic_appeal_list" model="ir.ui.view">
+    <field name="name">university.academic.appeal.list</field>
+    <field name="model">university.academic.appeal</field>
+    <field name="priority">1</field>
+    <field name="arch" type="xml">
+      <list string="Academic Appeals">
+        <field name="student_id"/>
+        <field name="result_id"/>
+        <field name="state"/>
+      </list>
+    </field>
+  </record>
+  <record id="p7_university_academic_appeal_form" model="ir.ui.view">
+    <field name="name">university.academic.appeal.form</field>
+    <field name="model">university.academic.appeal</field>
+    <field name="priority">1</field>
+    <field name="arch" type="xml">
+      <form string="Academic Appeals">
+        <header>
+          <button name="action_resolve" type="object" string="Resolve" class="btn-primary" invisible="state not in ('draft',)" groups="kibabii-university-erp.group_university_manager,kibabii-university-erp.group_registrar,kibabii-university-erp.group_exam_board"/>
+          <button name="action_reject" type="object" string="Reject" class="btn-primary" invisible="state not in ('draft',)" groups="kibabii-university-erp.group_university_manager,kibabii-university-erp.group_registrar,kibabii-university-erp.group_exam_board"/>
+          <field name="state" widget="statusbar"/>
+        </header>
+        <sheet>
+          <group>
+            <field name="result_id"/>
+            <field name="student_id"/>
+            <field name="reason"/>
+            <field name="resolution"/>
+            <field name="approved_by"/>
+            <field name="approved_on"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+  <record id="p7_action_university_academic_appeal" model="ir.actions.act_window">
+    <field name="name">Academic Appeals</field>
+    <field name="res_model">university.academic.appeal</field>
+    <field name="view_mode">list,form</field>
+  </record>
+  <record id="p7_university_progression_list" model="ir.ui.view">
+    <field name="name">university.progression.list</field>
+    <field name="model">university.progression</field>
+    <field name="priority">1</field>
+    <field name="arch" type="xml">
+      <list string="Progression Decisions">
+        <field name="student_id"/>
+        <field name="semester_id"/>
+        <field name="earned_credits"/>
+        <field name="gpa"/>
+        <field name="decision"/>
+        <field name="state"/>
+      </list>
+    </field>
+  </record>
+  <record id="p7_university_progression_form" model="ir.ui.view">
+    <field name="name">university.progression.form</field>
+    <field name="model">university.progression</field>
+    <field name="priority">1</field>
+    <field name="arch" type="xml">
+      <form string="Progression Decisions">
+        <header>
+          <button name="action_evaluate" type="object" string="Evaluate" class="btn-primary" invisible="state not in ('draft',)" groups="kibabii-university-erp.group_university_manager,kibabii-university-erp.group_registrar,kibabii-university-erp.group_coordinator"/>
+          <button name="action_approve" type="object" string="Approve Progression" class="btn-primary" invisible="state not in ('evaluated',)" groups="kibabii-university-erp.group_university_manager,kibabii-university-erp.group_registrar,kibabii-university-erp.group_exam_board"/>
+          <field name="state" widget="statusbar"/>
+        </header>
+        <sheet>
+          <group>
+            <field name="student_id"/>
+            <field name="semester_id"/>
+            <field name="policy_id"/>
+            <field name="earned_credits"/>
+            <field name="failed_courses"/>
+            <field name="gpa"/>
+            <field name="decision"/>
+            <field name="evaluation_notes"/>
+            <field name="approved_by"/>
+            <field name="approved_on"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+  <record id="p7_action_university_progression" model="ir.actions.act_window">
+    <field name="name">Progression Decisions</field>
+    <field name="res_model">university.progression</field>
+    <field name="view_mode">list,form</field>
+  </record>
+  <record id="p7_university_student_clearance_list" model="ir.ui.view">
+    <field name="name">university.student.clearance.list</field>
+    <field name="model">university.student.clearance</field>
+    <field name="priority">1</field>
+    <field name="arch" type="xml">
+      <list string="Graduation Clearances">
+        <field name="student_id"/>
+        <field name="kind"/>
+        <field name="state"/>
+        <field name="approved_by"/>
+      </list>
+    </field>
+  </record>
+  <record id="p7_university_student_clearance_form" model="ir.ui.view">
+    <field name="name">university.student.clearance.form</field>
+    <field name="model">university.student.clearance</field>
+    <field name="priority">1</field>
+    <field name="arch" type="xml">
+      <form string="Graduation Clearances">
+        <header>
+          <button name="action_clear" type="object" string="Clear" class="btn-primary" invisible="state not in ('draft', 'blocked')" groups="kibabii-university-erp.group_university_manager,kibabii-university-erp.group_registrar,kibabii-university-erp.group_finance_officer,kibabii-university-erp.group_library_officer"/>
+          <button name="action_block" type="object" string="Block" class="btn-primary" invisible="state not in ('draft', 'cleared')" groups="kibabii-university-erp.group_university_manager,kibabii-university-erp.group_registrar,kibabii-university-erp.group_finance_officer,kibabii-university-erp.group_library_officer"/>
+          <field name="state" widget="statusbar"/>
+        </header>
+        <sheet>
+          <group>
+            <field name="student_id"/>
+            <field name="kind"/>
+            <field name="notes"/>
+            <field name="approved_by"/>
+            <field name="approved_on"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+  <record id="p7_action_university_student_clearance" model="ir.actions.act_window">
+    <field name="name">Graduation Clearances</field>
+    <field name="res_model">university.student.clearance</field>
+    <field name="view_mode">list,form</field>
+  </record>
+  <record id="p7_university_student_document_list" model="ir.ui.view">
+    <field name="name">university.student.document.list</field>
+    <field name="model">university.student.document</field>
+    <field name="priority">1</field>
+    <field name="arch" type="xml">
+      <list string="Student Documents">
+        <field name="student_id"/>
+        <field name="name"/>
+        <field name="kind"/>
+        <field name="state"/>
+      </list>
+    </field>
+  </record>
+  <record id="p7_university_student_document_form" model="ir.ui.view">
+    <field name="name">university.student.document.form</field>
+    <field name="model">university.student.document</field>
+    <field name="priority">1</field>
+    <field name="arch" type="xml">
+      <form string="Student Documents">
+        <header>
+          <button name="action_verify" type="object" string="Verify" class="btn-primary" invisible="state not in ('draft',)" groups="kibabii-university-erp.group_university_manager,kibabii-university-erp.group_registrar"/>
+          <button name="action_reject" type="object" string="Reject" class="btn-primary" invisible="state not in ('draft',)" groups="kibabii-university-erp.group_university_manager,kibabii-university-erp.group_registrar"/>
+          <field name="state" widget="statusbar"/>
+        </header>
+        <sheet>
+          <group>
+            <field name="student_id"/>
+            <field name="name"/>
+            <field name="kind"/>
+            <field name="filename"/>
+            <field name="file_data" filename="filename"/>
+            <field name="notes"/>
+            <field name="approved_by"/>
+            <field name="approved_on"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+  <record id="p7_action_university_student_document" model="ir.actions.act_window">
+    <field name="name">Student Documents</field>
+    <field name="res_model">university.student.document</field>
+    <field name="view_mode">list,form</field>
+  </record>
+  <record id="p7_university_academic_audit_list" model="ir.ui.view">
+    <field name="name">university.academic.audit.list</field>
+    <field name="model">university.academic.audit</field>
+    <field name="priority">1</field>
+    <field name="arch" type="xml">
+      <list string="Academic Audit History">
+        <field name="create_date"/>
+        <field name="actor_id"/>
+        <field name="model_name"/>
+        <field name="record_name"/>
+        <field name="action"/>
+      </list>
+    </field>
+  </record>
+  <record id="p7_university_academic_audit_form" model="ir.ui.view">
+    <field name="name">university.academic.audit.form</field>
+    <field name="model">university.academic.audit</field>
+    <field name="priority">1</field>
+    <field name="arch" type="xml">
+      <form string="Academic Audit History">
+        <header/>
+        <sheet>
+          <group>
+            <field name="create_date" readonly="1"/>
+            <field name="actor_id" readonly="1"/>
+            <field name="model_name" readonly="1"/>
+            <field name="record_id" readonly="1"/>
+            <field name="record_name" readonly="1"/>
+            <field name="action" readonly="1"/>
+            <field name="details" readonly="1"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+  <record id="p7_action_university_academic_audit" model="ir.actions.act_window">
+    <field name="name">Academic Audit History</field>
+    <field name="res_model">university.academic.audit</field>
+    <field name="view_mode">list,form</field>
+  </record>
+  <record id="p7_student_university_list" model="ir.ui.view">
+    <field name="name">student.university.list</field>
+    <field name="model">student.university</field>
+    <field name="priority">1</field>
+    <field name="arch" type="xml">
+      <list string="Student Profiles">
+        <field name="registration_number"/>
+        <field name="name"/>
+        <field name="programme_id"/>
+        <field name="registration_state"/>
+        <field name="phone_number"/>
+      </list>
+    </field>
+  </record>
+  <record id="p7_student_university_form" model="ir.ui.view">
+    <field name="name">student.university.form</field>
+    <field name="model">student.university</field>
+    <field name="priority">1</field>
+    <field name="arch" type="xml">
+      <form string="Student Profiles">
+        <header>
+          <field name="registration_state" widget="statusbar"/>
+          <button name="action_submit_application" type="object" string="Submit Application" groups="kibabii-university-erp.group_registrar,kibabii-university-erp.group_university_manager" invisible="registration_state not in ('applicant',)"/>
+          <button name="action_verify_application" type="object" string="Verify Application" groups="kibabii-university-erp.group_registrar,kibabii-university-erp.group_university_manager" invisible="registration_state not in ('submitted',)"/>
+          <button name="action_admit" type="object" string="Approve Admission" groups="kibabii-university-erp.group_registrar,kibabii-university-erp.group_university_manager" invisible="registration_state not in ('verified',)"/>
+          <button name="action_confirm_registration" type="object" string="Confirm Registration" groups="kibabii-university-erp.group_registrar,kibabii-university-erp.group_university_manager" invisible="registration_state not in ('admitted',)"/>
+          <button name="action_return_application" type="object" string="Return for Correction" groups="kibabii-university-erp.group_registrar,kibabii-university-erp.group_university_manager" invisible="registration_state not in ('submitted', 'verified')"/>
+          <button name="action_reject_application" type="object" string="Reject" groups="kibabii-university-erp.group_registrar,kibabii-university-erp.group_university_manager" invisible="registration_state not in ('submitted', 'verified')"/>
+          <button name="action_suspend" type="object" string="Suspend" groups="kibabii-university-erp.group_registrar,kibabii-university-erp.group_university_manager" invisible="registration_state not in ('registered',)"/>
+          <button name="action_reinstate" type="object" string="Reinstate" groups="kibabii-university-erp.group_registrar,kibabii-university-erp.group_university_manager" invisible="registration_state not in ('suspended',)"/>
+          <button name="action_graduate" type="object" string="Authorize Graduation" groups="kibabii-university-erp.group_registrar,kibabii-university-erp.group_university_manager" invisible="registration_state not in ('registered',)"/>
+        </header>
+        <sheet>
+          <group>
+            <field name="photo" widget="image"/>
+            <field name="name"/>
+            <field name="registration_number"/>
+            <field name="admission_number"/>
+            <field name="email"/>
+            <field name="phone_number"/>
+            <field name="user_id"/>
+            <field name="university_id"/>
+            <field name="programme_id"/>
+            <field name="department_id"/>
+            <field name="academic_year_id"/>
+            <field name="intake"/>
+            <field name="study_mode"/>
+            <field name="year_of_study"/>
+          </group>
+          <notebook>
+            <page string="Personal Details">
+              <group>
+                <field name="date_of_birth"/>
+                <field name="gender"/>
+                <field name="nationality_id"/>
+                <field name="identity_type"/>
+                <field name="identity_number" groups="kibabii-university-erp.group_registrar,kibabii-university-erp.group_university_manager"/>
+                <field name="street"/>
+                <field name="street2"/>
+                <field name="city"/>
+                <field name="state_id"/>
+                <field name="country_id"/>
+                <field name="postal_code"/>
+              </group>
+            </page>
+            <page string="Family and Emergency">
+              <group>
+                <field name="guardian_name"/>
+                <field name="guardian_relationship"/>
+                <field name="guardian_phone"/>
+                <field name="guardian_email"/>
+                <field name="emergency_name"/>
+                <field name="emergency_relationship"/>
+                <field name="emergency_phone"/>
+              </group>
+            </page>
+            <page string="Entry and Support">
+              <group>
+                <field name="previous_school"/>
+                <field name="entry_qualification"/>
+                <field name="qualification_year"/>
+                <field name="sponsor_name"/>
+                <field name="sponsor_contact"/>
+                <field name="support_requirements" groups="kibabii-university-erp.group_registrar,kibabii-university-erp.group_university_manager"/>
+              </group>
+            </page>
+            <page string="Documents">
+              <group>
+                <field name="document_ids" readonly="1"/>
+              </group>
+            </page>
+            <page string="Course Registrations">
+              <group>
+                <field name="registration_ids" readonly="1"/>
+              </group>
+            </page>
+            <page string="Published Academic Record">
+              <group>
+                <field name="published_result_ids" readonly="1"/>
+                <field name="published_credits"/>
+                <field name="published_gpa"/>
+              </group>
+            </page>
+            <page string="Finance">
+              <group>
+                <field name="fee_ids" readonly="1"/>
+                <field name="total_fee"/>
+                <field name="total_paid"/>
+                <field name="fee_balance"/>
+              </group>
+            </page>
+            <page string="Progression and Graduation">
+              <group>
+                <field name="progression_ids" readonly="1"/>
+                <field name="clearance_ids" readonly="1"/>
+                <field name="academic_cleared"/>
+                <field name="financial_cleared"/>
+                <field name="library_cleared"/>
+                <field name="graduation_blockers"/>
+                <field name="graduation_eligible"/>
+                <field name="graduation_by"/>
+                <field name="graduation_on"/>
+              </group>
+            </page>
+            <page string="Approvals">
+              <group>
+                <field name="decision_reason"/>
+                <field name="admission_by"/>
+                <field name="admission_on"/>
+                <field name="registration_confirmed_by"/>
+                <field name="registration_confirmed_on"/>
+              </group>
+            </page>
+          </notebook>
+        </sheet>
+        <chatter/>
+      </form>
+    </field>
+  </record>
+  <record id="p7_action_student_university" model="ir.actions.act_window">
+    <field name="name">Student Profiles</field>
+    <field name="res_model">student.university</field>
+    <field name="view_mode">list,form</field>
+  </record>
+  <record id="p7_session_calendar" model="ir.ui.view">
+    <field name="name">university.class.session.calendar</field>
+    <field name="model">university.class.session</field>
+    <field name="arch" type="xml">
+      <calendar string="Academic Timetable" date_start="start_datetime" date_stop="end_datetime" color="lecturer_id">
+        <field name="name"/>
+        <field name="venue"/>
+        <field name="offering_id"/>
+      </calendar>
+    </field>
+  </record>
+  <record id="p7_action_absence" model="ir.actions.act_window">
+    <field name="name">Attendance Below Policy</field>
+    <field name="res_model">university.course.registration</field>
+    <field name="view_mode">list,form</field>
+    <field name="domain">[('state','=','approved'),('absence_flag','=',True)]</field>
+  </record>
+  <record id="p7_action_graduation" model="ir.actions.act_window">
+    <field name="name">Graduation Eligibility</field>
+    <field name="res_model">student.university</field>
+    <field name="view_mode">list,form</field>
+    <field name="domain">[('registration_state','in',['registered','graduated'])]</field>
+  </record>
+</odoo>

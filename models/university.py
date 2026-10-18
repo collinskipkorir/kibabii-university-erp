@@ -16,7 +16,9 @@ class UniversityManagement(models.Model):
        # required=True,
         #tracking=True
     ##)
-    name = fields.Char(string='University Name')
+    name = fields.Char(string='University Name', required=True)
+    description = fields.Text(string='Description')
+    logo = fields.Image(string='Logo')
     code = fields.Char(
         string='University Code',
         readonly=True,

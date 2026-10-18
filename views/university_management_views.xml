@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <!-- List View -->
     <record id="view_university_management_list" model="ir.ui.view">
@@ -39,19 +38,19 @@
                         <notebook>
                             <page string="Departments">
                                 <field name="department_ids">
-                                    <tree editable="bottom">
+                                    <list editable="bottom">
                                         <field name="name"/>
                                         <field name="department_type"/>
-                                    </tree>
+                                    </list>
                                 </field>
                             </page>
 
                             <page string="Students">
                                 <field name="student_ids">
-                                    <tree>
+                                    <list>
                                         <field name="name"/>
                                         <field name="registration_number"/>
-                                    </tree>
+                                    </list>
                                 </field>
                             </page>
                         </notebook>
@@ -62,10 +61,7 @@
 
                     <div>
                         <div>
-                            <button name="%(action_report_student_list)d"
-                                    string="Print Student List"
-                                    type="action"
-                                    class="oe_highlight"/>
+                            <button name="%(action_university_full_report)d" string="Print University Report" type="action" class="oe_highlight"/>
                         </div>
 
                     </div>

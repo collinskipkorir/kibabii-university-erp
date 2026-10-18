@@ -1,45 +1,16 @@
 <odoo>
-
-    <!-- Root Menu -->
-    <menuitem id="menu_university_root"
-              name="University Management"/>
-
-    <!-- Management Menu -->
-    <menuitem id="menu_university_management"
-              name="Management"
-              parent="menu_university_root"/>
-
-    <!-- Department Action -->
-    <record id="action_university_department" model="ir.actions.act_window">
-        <field name="name">Departments</field>
-        <field name="res_model">university.department</field>
-        <field name="view_mode">list,form</field>
-    </record>
-
-    <!-- Student Action -->
-    <record id="action_university_student" model="ir.actions.act_window">
-        <field name="name">Students</field>
-        <field name="res_model">student.university</field>
-        <field name="view_mode">list,form</field>
-    </record>
-
-    <!-- Departments Menu -->
-    <menuitem id="menu_university_departments"
-              name="Departments"
-              parent="menu_university_management"
-              action="action_university_department"/>
-
-    <!-- Students Menu -->
-    <menuitem id="menu_university_students"
-              name="Students"
-              parent="menu_university_management"
-              action="action_university_student"/>
-
+    <menuitem id="menu_university_root" name="University Management" groups="kibabii-university-erp.group_university_manager,kibabii-university-erp.group_registrar,kibabii-university-erp.group_coordinator,kibabii-university-erp.group_lecturer,kibabii-university-erp.group_exam_board,kibabii-university-erp.group_finance_officer,kibabii-university-erp.group_library_officer"/>
+    <menuitem id="menu_university_management" name="Management" parent="menu_university_root"/>
+    <menuitem id="menu_universities_backend" name="Universities" parent="menu_university_management" action="action_university_management" sequence="1"/>
+    <menuitem id="menu_university_departments" name="Departments" parent="menu_university_management" action="action_university_department" sequence="2"/>
+    <menuitem id="menu_university_students" name="Students" parent="menu_university_management" action="action_university_student" sequence="3"/>
+    <menuitem id="menu_university_course" name="Courses" parent="menu_university_management" action="action_university_course" sequence="4"/>
+    <menuitem id="menu_student_results" name="Student Results" parent="menu_university_management" action="action_student_result" sequence="5"/>
+    <menuitem id="menu_university_fee" name="Student Fees" parent="menu_university_management" action="action_university_fee" sequence="6"/>
     <record id="menu_universities" model="website.menu">
         <field name="name">Universities</field>
         <field name="url">/universities</field>
         <field name="parent_id" ref="website.main_menu"/>
-        <field name="sequence" eval="30"/>
+        <field name="sequence">30</field>
     </record>
-
 </odoo>

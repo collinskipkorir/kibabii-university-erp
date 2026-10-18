@@ -1,8 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
 <odoo>
 
-    ```
+
     <!-- Department List -->
     <record id="view_university_department_list" model="ir.ui.view">
         <field name="name">university.department.list</field>
@@ -32,7 +30,7 @@
                         <field name="description"/>
                     </group>
                 </sheet>
-                class="oe_chatter">
+                <chatter/>
             </form>
         </field>
     </record>
@@ -43,6 +41,6 @@
         <field name="res_model">university.department</field>
         <field name="view_mode">list,form</field>
     </record>
-    ```
+
 
 </odoo>

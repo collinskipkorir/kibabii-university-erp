@@ -1,0 +1,20 @@
+<odoo noupdate="1">
+  <record id="sequence_student_university" model="ir.sequence">
+    <field name="name">student.university</field>
+    <field name="code">student.university</field>
+    <field name="prefix">STU/</field>
+    <field name="padding">5</field>
+  </record>
+  <record id="sequence_university_course" model="ir.sequence">
+    <field name="name">university.course</field>
+    <field name="code">university.course</field>
+    <field name="prefix">CRS/</field>
+    <field name="padding">5</field>
+  </record>
+  <record id="sequence_university_management" model="ir.sequence">
+    <field name="name">university.management</field>
+    <field name="code">university.management</field>
+    <field name="prefix">UNI/</field>
+    <field name="padding">5</field>
+  </record>
+<record id="sequence_student_admission" model="ir.sequence"><field name="name">Student Admission</field><field name="code">university.student.admission</field><field name="prefix">ADM/%(year)s/</field><field name="padding">5</field></record></odoo>

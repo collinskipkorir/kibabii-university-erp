@@ -1,0 +1,227 @@
+UNIVERSITY ERP - PROCEDURE 7 AND STUDENT PROFILE
+Version 18.0.2.0.0
+
+WHAT WAS IMPLEMENTED
+
+The existing module now supports the complete procedure 7 workflow: academic
+structure, course registration, class lists, timetables, attendance, absence
+referrals, weighted assessment, moderation, examination board approval,
+controlled result publication, student appeals, progression decisions and
+graduation eligibility with three separate departmental clearances.
+
+Student profiles include personal/contact information, photograph, date of
+birth, nationality, identity details, address, guardian and emergency contacts,
+previous education, sponsorship, support requirements, programme, department,
+intake, study mode, academic year, documents, admission, registration, results,
+fees, progression and graduation status. Identity numbers and support needs
+are restricted to the Registrar and University Manager roles in the staff app.
+
+ACTIVATE THE UPDATE
+
+1. Back up the existing application database and filestore.
+2. Stop the running Odoo service/process and start it with the updated source.
+3. In Apps, remove the Apps search filter if necessary, find University ERP
+   (technical name: kibabii-university-erp), and select Upgrade.
+4. Refresh the browser or sign out and sign back in.
+5. Assign staff roles under Settings > Users & Companies > Users.
+
+The source directory has been updated. The existing application database was
+NOT upgraded or populated with test students by this implementation task.
+Installation, upgrades and automated checks ran in temporary databases.
+
+If the University menu is missing, give the user University Manager or the
+appropriate academic staff role. Portal students use /my/student instead of
+the internal administration menus.
+
+ROLES
+
+University Manager: full module administration and an explicit operational
+override for the academic actions. Give this role sparingly.
+Registrar / Academic Office: structure, policies, student admission and
+registration, result publication, academic clearance and graduation.
+Programme Coordinator: assigned course registrations, timetable management,
+attendance corrections, moderation, absence review and progression review.
+Lecturer: only assigned classes, attendance and assessment entry.
+Examination Board: policy/result approval, appeal resolution and progression
+approval. A lecturer alone cannot approve or publish results.
+Student Finance Officer: fee records and financial clearance.
+Student Library Officer: library clearance, based on verified library evidence.
+Student: own permitted portal records; published results only.
+
+INITIAL CONFIGURATION
+
+1. Create the university, departments and course units, including credits and
+   prerequisites. Do this before opening course offerings.
+2. Under Academic Configuration, create an academic year and semesters.
+   Semester dates must be inside the year. Set registration opening/closing dates.
+3. Create an academic policy version. Review all values with the university's
+   authorized policy owner before approval. Example field defaults are:
+   CA 30%, examination 70%, pass 40%, A/B/C/D thresholds 70/60/50/40,
+   grade points 4/3/2/1, attendance 75%, minimum progression credits 3,
+   minimum GPA 2, maximum failed courses 0, maximum attempts 3,
+   appeal window 14 days. These are configurable defaults, not confirmed
+   Kibabii University policy.
+4. Approve the policy. Approved versions cannot be edited. Duplicate a policy
+   to create the next draft version and approve it separately.
+5. Create programmes with a department, coordinator, required courses,
+   completion credit requirement, duration and approved policy version.
+6. Create semester course offerings with programme, course, semester,
+   lecturer, capacity and approved policy. The lecturer must have the Lecturer role.
+7. Open registration. Course credits/prerequisites and programme curriculum
+   are locked once classes have opened, to preserve academic history.
+
+STUDENT ADMISSION AND PROFILE
+
+1. A student signs up at /student/register, or the Registrar creates an
+   applicant through Student Profiles. Creating a portal account does not
+   approve admission or registration.
+2. The student signs in, opens /my/student/profile, completes details and
+   uploads identity and qualification evidence. Supported portal uploads are
+   PDF, JPEG and PNG, up to 10 MB each.
+3. The student submits the application for review. Staff can also submit it.
+4. The Registrar verifies documents using Student Documents. Verified evidence
+   cannot be overwritten; add a replacement document where necessary.
+5. The Registrar verifies the application and approves admission. A unique
+   admission number is assigned at this approval step.
+6. The Registrar confirms student registration. Documents and profile data
+   must be complete. Admission, student registration and fees remain separate.
+7. Incomplete applications can be returned with a reason; submitted
+   applications can be rejected. Registered students can be suspended and
+   reinstated only with a recorded reason.
+
+Student record numbers and admission numbers are different: the first identifies
+the profile, while the admission number records an approved admission.
+
+SEMESTER COURSE REGISTRATION
+
+1. The registered student opens /my/student/courses and requests an available
+   programme class. Staff can create a draft request through Course Registrations.
+2. Submission and approval both check confirmed student registration,
+   programme membership, registration dates, capacity, prerequisites and
+   repeat-attempt limits. Prerequisites require published passing results.
+3. The Registrar or assigned Coordinator approves or rejects the request.
+   Rejection requires a reason. Approved requests form the class list.
+4. Cancellation is restricted and requires a reason. Requests with attendance
+   or assessment evidence cannot be cancelled or deleted. A rejected/cancelled
+   request without such evidence can be reopened by authorized staff.
+5. Repeated portal submissions do not create duplicate requests.
+
+TIMETABLE AND ATTENDANCE
+
+1. Create sessions with class, venue, start and end time.
+2. Publish the timetable. Overlapping lecturer, venue or programme sessions
+   are blocked. Published sessions cannot be silently edited; cancel and replace.
+3. The assigned Lecturer generates attendance from approved registrations.
+4. Open Class Attendance and mark present, late, absent or excused. The list
+   supports inline marking. Finalize the session after it ends; every student
+   must have a mark.
+5. Only the Coordinator/Registrar can correct finalized attendance, and each
+   correction needs a new reason. Original/new values and actor are audited.
+6. Absence Monitoring lists registrations below their approved policy threshold.
+   Use Refer Absence to create a follow-up activity for the programme coordinator.
+   Repeating the action does not create a second identical outstanding activity.
+   Referral is an explicit staff action, not an enabled background notification job.
+
+Excused sessions are excluded from the attendance denominator; present and
+late sessions count as attended. Review this rule against institutional policy.
+
+ASSESSMENT, APPROVAL AND PUBLICATION
+
+1. From an approved course registration, choose Enter Assessment.
+2. The assigned Lecturer enters CA and examination percentages. Both must
+   be entered; zero is a valid entered mark. Weighted totals and grades use
+   the offering's approved policy version.
+3. Submit marks. Incomplete components, ineligible registrations and
+   attendance below policy are blocked.
+4. The Coordinator records moderation notes and moderates the results.
+5. The Examination Board approves only after all approved class registrations
+   have moderated results.
+6. The Registrar publishes the approved results. Only then can the student
+   see them or include them in a transcript or published GPA/credit totals.
+7. Students submit appeals at /my/student/appeals within the policy deadline.
+   Authorized staff record a resolution and resolve/reject the appeal.
+8. Amendments require an authorized reopening and reason. Prior marks and
+   changes remain in Academic Audit History. Reopened results disappear from
+   the student's published record until approval and publication are repeated.
+   Related progression approval and academic clearance are invalidated.
+
+Finalized academic records are retained. Results for a student whose graduation
+has already been authorized cannot be reopened through this routine workflow;
+formal degree revocation is outside this implementation.
+
+PROGRESSION AND GRADUATION
+
+1. Create a progression review for the student/semester and approved policy.
+2. Evaluate only after all semester results are published and open appeals
+   are resolved. The evaluation records earned credits, failed courses,
+   credit-weighted GPA, repeat attempts and a Progress or Repeat/Support decision.
+3. Obtain authorized approval. Evaluated/approved snapshots cannot be edited.
+4. For graduation, publish passing results for all required programme courses,
+   meet completion credits/GPA, and approve progression for all registered semesters.
+   Repeated courses count once in cumulative credits/GPA, using the best
+   published mark. Reconcile this rule with university policy before use.
+5. Obtain separate Academic, Financial and Library clearances. Each has its own
+   responsible officer, evidence notes, decision and audit history.
+6. Financial clearance is blocked while the existing student fee balance is
+   outstanding. Library clearance is verified manually by the Library Officer.
+7. Review Graduation Eligibility and its printable report. Missing clearances,
+   pending results/appeals or incomplete academics prevent authorization.
+8. The Registrar authorizes graduation only after every check succeeds.
+
+The module uses its existing fee ledger. It does not add bank reconciliation,
+payment-provider integrations or a complete library circulation application.
+Financial and library officers must verify their source systems before clearance.
+
+PORTAL ADDRESSES
+
+/student/register             Initial portal account and applicant profile
+/my/student                  Student dashboard
+/my/student/profile          Detailed profile, documents and application submission
+/my/student/courses          Course requests and registration status
+/my/student/timetable        Approved-class timetable
+/my/student/attendance       Own attendance and policy warnings
+/my/results                  Own published results
+/my/student/appeals          Academic appeals
+/my/fees                     Own existing fee records
+
+REPORTS
+
+Existing student transcript is now restricted to published results.
+Additional printable reports: Class Attendance Register, Progression Decision,
+and Graduation Eligibility. Reports appear in Print for their respective records.
+Report HTML rendering is covered by automated checks; full PDF conversion and
+browser/device testing remain part of local user acceptance testing.
+
+EXISTING DATA AND UPGRADE
+
+Existing students, record numbers, original marks and fee balances are retained.
+Existing profiles default to Applicant and require review/completion and approved
+registration before new course enrollment. They are not silently admitted.
+Existing results default to Draft; staff must reconcile them to real approved
+registrations and source CA/examination evidence, then moderate/approve/publish.
+Do not invent assessment components merely to reproduce an old total.
+The upgrade migration recalculates stored GPA/credits/points to prevent old
+unpublished grades from remaining visible in stored student aggregates.
+
+Unique student email, portal user, identity and admission constraints are included.
+Resolve pre-existing duplicates before upgrading if Odoo reports a constraint error.
+
+TESTING AND DEPLOYMENT
+
+The module includes tests/test_procedure7.py with the procedure_seven tag.
+Tests cover the complete workflow, role restrictions, unpublished results,
+attendance corrections, absence referrals, timetable conflicts, policy immutability,
+incomplete marks, separate clearances, appeals, amendments, capacity, prerequisites,
+profile controls, portal submissions and page/report rendering.
+
+The separate baseline upgrade test retains an old-version student, original
+75% result and 750 fee balance through upgrade. A migration-specific test checks
+that unpublished aggregates reset while that original result remains unchanged.
+
+The locally modified Spreadsheet Dashboard add-on still has an unrelated category
+reference inconsistency. Temporary test databases receive an alias for that
+category solely to allow academic tests. No core add-on or live database was
+changed to work around it.
+
+After upgrading, run staff/student acceptance checks with the institution's
+approved policies and sample records before operational use.

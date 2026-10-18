@@ -1,0 +1,52 @@
+<odoo>
+  <record id="p7_rule_student_university" model="ir.rule">
+    <field name="name">Academic scope: student.university</field>
+    <field name="model_id" ref="model_student_university"/>
+    <field name="domain_force">[(1,'=',1)] if (user.has_group('kibabii-university-erp.group_university_manager') or user.has_group('kibabii-university-erp.group_registrar') or user.has_group('kibabii-university-erp.group_exam_board') or user.has_group('kibabii-university-erp.group_finance_officer') or user.has_group('kibabii-university-erp.group_library_officer')) else ['|',('programme_id.coordinator_id','=',user.id),('registration_ids.lecturer_id','=',user.id)] if (user.has_group('kibabii-university-erp.group_lecturer') or user.has_group('kibabii-university-erp.group_coordinator')) else [('user_id','=',user.id)]</field>
+  </record>
+  <record id="p7_rule_student_result" model="ir.rule">
+    <field name="name">Academic scope: student.result</field>
+    <field name="model_id" ref="model_student_result"/>
+    <field name="domain_force">[(1,'=',1)] if (user.has_group('kibabii-university-erp.group_university_manager') or user.has_group('kibabii-university-erp.group_registrar') or user.has_group('kibabii-university-erp.group_exam_board')) else (['|', ('lecturer_id','=',user.id), ('coordinator_id','=',user.id)] if (user.has_group('kibabii-university-erp.group_lecturer') and user.has_group('kibabii-university-erp.group_coordinator')) else [('coordinator_id','=',user.id)] if user.has_group('kibabii-university-erp.group_coordinator') else [('lecturer_id','=',user.id)] if user.has_group('kibabii-university-erp.group_lecturer') else [('student_id.user_id','=',user.id)]) if (user.has_group('kibabii-university-erp.group_lecturer') or user.has_group('kibabii-university-erp.group_coordinator')) else [('student_id.user_id','=',user.id),('state','=','published')]</field>
+  </record>
+  <record id="p7_rule_university_course_registration" model="ir.rule">
+    <field name="name">Academic scope: university.course.registration</field>
+    <field name="model_id" ref="model_university_course_registration"/>
+    <field name="domain_force">[(1,'=',1)] if (user.has_group('kibabii-university-erp.group_university_manager') or user.has_group('kibabii-university-erp.group_registrar') or user.has_group('kibabii-university-erp.group_exam_board')) else (['|', ('lecturer_id','=',user.id), ('coordinator_id','=',user.id)] if (user.has_group('kibabii-university-erp.group_lecturer') and user.has_group('kibabii-university-erp.group_coordinator')) else [('coordinator_id','=',user.id)] if user.has_group('kibabii-university-erp.group_coordinator') else [('lecturer_id','=',user.id)] if user.has_group('kibabii-university-erp.group_lecturer') else [('student_id.user_id','=',user.id)])</field>
+  </record>
+  <record id="p7_rule_university_class_attendance" model="ir.rule">
+    <field name="name">Academic scope: university.class.attendance</field>
+    <field name="model_id" ref="model_university_class_attendance"/>
+    <field name="domain_force">[(1,'=',1)] if (user.has_group('kibabii-university-erp.group_university_manager') or user.has_group('kibabii-university-erp.group_registrar') or user.has_group('kibabii-university-erp.group_exam_board')) else (['|', ('lecturer_id','=',user.id), ('coordinator_id','=',user.id)] if (user.has_group('kibabii-university-erp.group_lecturer') and user.has_group('kibabii-university-erp.group_coordinator')) else [('coordinator_id','=',user.id)] if user.has_group('kibabii-university-erp.group_coordinator') else [('lecturer_id','=',user.id)] if user.has_group('kibabii-university-erp.group_lecturer') else [('student_id.user_id','=',user.id)])</field>
+  </record>
+  <record id="p7_rule_university_course_offering" model="ir.rule">
+    <field name="name">Academic scope: university.course.offering</field>
+    <field name="model_id" ref="model_university_course_offering"/>
+    <field name="domain_force">[(1,'=',1)] if (user.has_group('kibabii-university-erp.group_university_manager') or user.has_group('kibabii-university-erp.group_registrar') or user.has_group('kibabii-university-erp.group_exam_board')) else (['|', ('lecturer_id','=',user.id), ('coordinator_id','=',user.id)] if (user.has_group('kibabii-university-erp.group_lecturer') and user.has_group('kibabii-university-erp.group_coordinator')) else [('coordinator_id','=',user.id)] if user.has_group('kibabii-university-erp.group_coordinator') else [('lecturer_id','=',user.id)] if user.has_group('kibabii-university-erp.group_lecturer') else [('registration_ids.student_id.user_id','=',user.id)])</field>
+  </record>
+  <record id="p7_rule_university_class_session" model="ir.rule">
+    <field name="name">Academic scope: university.class.session</field>
+    <field name="model_id" ref="model_university_class_session"/>
+    <field name="domain_force">[(1,'=',1)] if (user.has_group('kibabii-university-erp.group_university_manager') or user.has_group('kibabii-university-erp.group_registrar') or user.has_group('kibabii-university-erp.group_exam_board')) else (['|', ('lecturer_id','=',user.id), ('coordinator_id','=',user.id)] if (user.has_group('kibabii-university-erp.group_lecturer') and user.has_group('kibabii-university-erp.group_coordinator')) else [('coordinator_id','=',user.id)] if user.has_group('kibabii-university-erp.group_coordinator') else [('lecturer_id','=',user.id)] if user.has_group('kibabii-university-erp.group_lecturer') else [('offering_id.registration_ids.student_id.user_id','=',user.id),('state','in',['published','completed'])])</field>
+  </record>
+  <record id="p7_rule_university_progression" model="ir.rule">
+    <field name="name">Academic scope: university.progression</field>
+    <field name="model_id" ref="model_university_progression"/>
+    <field name="domain_force">[(1,'=',1)] if (user.has_group('kibabii-university-erp.group_university_manager') or user.has_group('kibabii-university-erp.group_registrar') or user.has_group('kibabii-university-erp.group_exam_board')) else [('coordinator_id','=',user.id)] if user.has_group('kibabii-university-erp.group_coordinator') else [('student_id.user_id','=',user.id)]</field>
+  </record>
+  <record id="p7_rule_university_academic_appeal" model="ir.rule">
+    <field name="name">Academic scope: university.academic.appeal</field>
+    <field name="model_id" ref="model_university_academic_appeal"/>
+    <field name="domain_force">[(1,'=',1)] if (user.has_group('kibabii-university-erp.group_university_manager') or user.has_group('kibabii-university-erp.group_registrar') or user.has_group('kibabii-university-erp.group_exam_board')) else [('coordinator_id','=',user.id)] if user.has_group('kibabii-university-erp.group_coordinator') else [('student_id.user_id','=',user.id)]</field>
+  </record>
+  <record id="p7_rule_university_student_document" model="ir.rule">
+    <field name="name">Academic scope: university.student.document</field>
+    <field name="model_id" ref="model_university_student_document"/>
+    <field name="domain_force">[(1,'=',1)] if user.has_group('kibabii-university-erp.group_university_manager') or user.has_group('kibabii-university-erp.group_registrar') else [(0,'=',1)]</field>
+  </record>
+  <record id="p7_rule_university_student_clearance" model="ir.rule">
+    <field name="name">Academic scope: university.student.clearance</field>
+    <field name="model_id" ref="model_university_student_clearance"/>
+    <field name="domain_force">[(1,'=',1)] if user.has_group('kibabii-university-erp.group_university_manager') else [('kind','=','academic')] if user.has_group('kibabii-university-erp.group_registrar') else [('kind','=','financial')] if user.has_group('kibabii-university-erp.group_finance_officer') else [('kind','=','library')] if user.has_group('kibabii-university-erp.group_library_officer') else [('student_id.user_id','=',user.id)]</field>
+  </record>
+</odoo>

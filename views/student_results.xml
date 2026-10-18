@@ -78,12 +78,4 @@
     <!-- =========================
          Menu
     ========================== -->
-    <menuitem
-            id="menu_student_results"
-            name="Student Results"
-            parent="menu_university_management"
-            action="action_student_result"
-            sequence="3"
-    />
-
-</odoo>
+    </odoo>

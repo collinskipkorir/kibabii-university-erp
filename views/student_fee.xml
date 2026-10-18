@@ -77,12 +77,4 @@
     <!-- =========================
          Menu
     ========================== -->
-    <menuitem
-        id="menu_university_fee"
-        name="Student Fees"
-        parent="menu_university_management"
-        action="action_university_fee"
-        sequence="4"
-    />
-
-</odoo>
+    </odoo>

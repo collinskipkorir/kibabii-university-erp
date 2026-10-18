@@ -1,38 +1,55 @@
 <odoo>
-
     <template id="student_dashboard_template" name="Student Portal">
-        <t t-call="website.layout">
-
-            <div class="container mt-5">
-
+        <t t-call="portal.portal_layout">
+            <div class="container my-5">
                 <h2>Student Dashboard</h2>
-
                 <t t-if="student">
-
-                    <p>
-                        <strong>Name:</strong>
-                        <t t-esc="student.name"/>
-                    </p>
-
-                    <p>
-                        <strong>Email:</strong>
-                        <t t-esc="student.email"/>
-                    </p>
-
-                    <p>
-                        <strong>Course:</strong>
-                        <t t-esc="student.course_id.name"/>
-                    </p>
-
+                    <p>Name: <span t-field="student.name"/></p>
+                    <p>Email: <span t-field="student.email"/></p>
+                    <p>Course: <span t-field="student.course_id.name"/></p>
+                    <p>Registration: <span t-field="student.registration_number"/></p>
+                    <a href="/my/results" class="btn btn-primary me-2">Results</a>
+                    <a href="/my/fees" class="btn btn-primary me-2">Fees</a>
+                    <a t-att-href="'/my/transcript/%s' % student.id" class="btn btn-secondary">Download transcript</a>
                 </t>
-
-                <t t-else="">
-                    <p>No student record found.</p>
-                </t>
-
+                <p t-else="">No student record found.</p>
             </div>
-
         </t>
     </template>
-
+    <template id="student_portal_home" inherit_id="portal.portal_my_home" name="Student Portal Link">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <div groups="kibabii-university-erp.group_student" class="my-3"><a href="/my/student">Student dashboard</a></div>
+        </xpath>
+    </template>
+    <template id="student_results" name="Student Results">
+        <t t-call="portal.portal_layout"><div class="container my-5">
+            <h2>My Results</h2><a href="/my/student">Student dashboard</a>
+            <table class="table"><thead><tr><th>Course</th><th>Marks</th><th>Grade</th></tr></thead>
+                <tbody><tr t-foreach="results" t-as="result"><td><span t-field="result.course_id.name"/></td><td><span t-field="result.marks"/></td><td><span t-field="result.grade"/></td></tr></tbody>
+            </table><p t-if="not results">No results available.</p>
+        </div></t>
+    </template>
+    <template id="student_fees" name="Student Fees">
+        <t t-call="portal.portal_layout"><div class="container my-5">
+            <h2>My Fees</h2><a href="/my/student">Student dashboard</a>
+            <table class="table"><thead><tr><th>Description</th><th>Amount</th><th>Paid</th><th>Balance</th></tr></thead>
+                <tbody><tr t-foreach="fees" t-as="fee"><td><span t-field="fee.name"/></td><td><span t-field="fee.amount"/></td><td><span t-field="fee.paid_amount"/></td><td><span t-field="fee.balance"/></td></tr></tbody>
+            </table><p t-if="not fees">No fees available.</p>
+        </div></t>
+    </template>
+    <template id="student_registration" name="Student Registration">
+        <t t-call="website.layout"><div class="container my-5">
+            <h2>Student Registration</h2><p t-if="error" class="alert alert-danger" t-esc="error"/>
+            <form action="/student/register/submit" method="post" class="col-md-6">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                <label for="student_name">Name</label><input id="student_name" name="name" required="required" class="form-control mb-3"/>
+                <label for="student_email">Email</label><input id="student_email" type="email" name="email" required="required" class="form-control mb-3"/>
+                <label for="student_phone">Phone</label><input id="student_phone" type="tel" name="phone_number" required="required" class="form-control mb-3"/>
+                <label for="student_password">Password</label><input id="student_password" type="password" name="password" required="required" autocomplete="new-password" class="form-control mb-3"/>
+                <label for="student_university">University</label><select id="student_university" name="university_id" required="required" class="form-select mb-3">
+                    <option value="">Select a university</option><option t-foreach="universities" t-as="uni" t-att-value="uni.id" t-esc="uni.name"/>
+                </select><button type="submit" class="btn btn-primary">Register</button>
+            </form>
+        </div></t>
+    </template>
 </odoo>

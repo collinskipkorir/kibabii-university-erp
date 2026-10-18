@@ -1,0 +1,25 @@
+<odoo>
+    <template id="report_student_transcript">
+        <t t-call="web.html_container"><t t-foreach="docs" t-as="doc"><t t-call="web.external_layout">
+            <div class="page">
+                <h2>Student Transcript</h2>
+                <p t-field="doc.name"/>
+                <p t-field="doc.registration_number"/>
+                <table class="table table-sm">
+                    <thead><tr><th>Course</th><th>Marks</th><th>Grade</th><th>Credits</th></tr></thead>
+                    <tbody><tr t-foreach="doc.published_result_ids" t-as="result">
+                        <td><span t-field="result.course_id.name"/></td><td><span t-field="result.marks"/></td>
+                        <td><span t-field="result.grade"/></td><td><span t-field="result.credit_units"/></td>
+                    </tr></tbody>
+                </table>
+                <p>GPA: <span t-field="doc.published_gpa"/></p>
+            </div>
+        </t>
+    </t></t></template>
+    <record id="student_transcript_report" model="ir.actions.report">
+        <field name="name">Student Transcript</field>
+        <field name="model">student.university</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">kibabii-university-erp.report_student_transcript</field>
+    </record>
+</odoo>

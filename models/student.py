@@ -2,10 +2,6 @@ from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
-class StudentUniversity:
-    pass
-
-
 class UniversityStudent(models.Model):
     _name = 'student.university'
     _description = 'University Student'
@@ -134,32 +130,17 @@ class UniversityStudent(models.Model):
         store=True
     )
 
-    @api.depends('result_ids.marks', 'result_ids.credit_units')
+    @api.depends('result_ids.state', 'result_ids.grade_point', 'result_ids.credit_units', 'result_ids.marks')
     def _compute_gpa(self):
         for student in self:
-            total_points = 0.0
-            total_credits = 0.0
+            best = {}
+            for result in student.result_ids.filtered(lambda r: r.state == 'published'):
+                if result.course_id.id not in best or result.marks > best[result.course_id.id].marks:
+                    best[result.course_id.id] = result
+            student.total_credits = sum(r.credit_units for r in best.values())
+            student.total_points = sum(r.grade_point * r.credit_units for r in best.values())
+            student.gpa = student.total_points / student.total_credits if student.total_credits else 0
 
-            for result in student.result_ids:
-                if result.marks >= 70:
-                    grade_point = 4
-                elif result.marks >= 60:
-                    grade_point = 3
-                elif result.marks >= 50:
-                    grade_point = 2
-                elif result.marks >= 40:
-                    grade_point = 1
-                else:
-                    grade_point = 0
-
-                total_points += grade_point * result.credit_units
-                total_credits += result.credit_units
-
-            student.total_points = total_points
-            student.total_credits = total_credits
-            student.gpa = total_points / total_credits if total_credits else 0.0
-
-    # Sequence Generation
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
@@ -167,28 +148,21 @@ class UniversityStudent(models.Model):
                 vals['registration_number'] = self.env['ir.sequence'].next_by_code(
                     'student.university'
                 ) or 'New'
+            if vals.get('email') and not vals.get('user_id'):
+                login = vals['email'].strip().lower()
+                if self.env['res.users'].sudo().with_context(active_test=False).search_count([('login', '=', login)]):
+                    raise ValidationError('A user with this email already exists. Select the existing Portal User.')
+                user = self.env['res.users'].sudo().with_context(no_reset_password=True).create({
+                    'name': vals.get('name'),
+                    'login': login,
+                    'email': login,
+                    'groups_id': [(6, 0, [self.env.ref('kibabii-university-erp.group_student').id])],
+                })
+                vals['user_id'] = user.id
         return super().create(vals_list)
-
-    @api.depends('fee_ids.amount', 'fee_ids.paid_amount')
-    def _compute_total_fees(self):
-        for student in self:
-            student.total_fees = sum(f.amount for f in student.fee_ids)
 
     @api.constrains('email')
     def _check_email_unique(self):
         for rec in self:
             if rec.email and self.search_count([('email', '=', rec.email), ('id', '!=', rec.id)]) > 0:
                 raise ValidationError("Email must be unique for each student.")
-
-
-    @api.model
-    def create(self, vals):
-        if 'email' in vals and not vals.get('user_id'):
-            # Create a portal user for the student
-            user = self.env['res.users'].create({
-                'name': vals.get('name'),
-                'login': vals.get('email'),
-                'groups_id': [(6, 0, [self.env.ref('kibabii_university_erp.group_student').id])]
-            })
-            vals['user_id'] = user.id
-        return super(StudentUniversity, self).create(vals)
